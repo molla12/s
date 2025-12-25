@@ -3,144 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>এডিটেবল লিংক শর্টনার</title>
+    <title>এলিট লিংক ড্যাশবোর্ড</title>
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #0f172a; color: white; 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --accent: #f472b6;
         }
-        .container { 
-            background: #1e293b; padding: 30px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            width: 100%; max-width: 450px; text-align: center;
-        }
-        h2 { color: #38bdf8; margin-bottom: 20px; font-size: 24px; }
-        
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #94a3b8; font-size: 14px; }
-        
-        input { 
-            width: 100%; padding: 12px; border: 1px solid #334155; 
-            border-radius: 8px; background: #0f172a; color: white; 
-            font-size: 16px; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: #38bdf8; }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        
-        button { 
-            flex: 2; padding: 12px; border: none; border-radius: 8px; 
-            background: #38bdf8; color: #0f172a; 
-            font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s;
-        }
-        button:hover { background: #0ea5e9; }
-        
-        .reset-btn { 
-            flex: 1; background: #ef4444; color: white;
-        }
-        .reset-btn:hover { background: #dc2626; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-        #resultArea { 
-            margin-top: 25px; display: none; padding: 20px; 
-            background: #0f172a; border-radius: 10px; border: 1px dashed #38bdf8;
+        body {
+            margin: 0; padding: 20px; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientAnim 10s ease infinite;
+            color: #fff; overflow-x: hidden;
         }
-        .short-url { 
-            color: #f472b6; font-weight: bold; font-size: 18px; 
-            display: block; margin-bottom: 10px; word-break: break-all;
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .copy-btn { 
-            background: #10b981; color: white; padding: 8px 15px; font-size: 14px; width: auto;
+
+        /* Glassmorphism Card */
+        .glass-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+            animation: slideUp 0.8s ease-out;
         }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { text-align: center; font-size: 24px; margin-bottom: 25px; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .input-box { width: 100%; margin-bottom: 15px; }
+        input {
+            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border); border-radius: 12px;
+            color: white; font-size: 15px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+
+        .btn-group { display: flex; gap: 10px; }
+        button {
+            flex: 1; padding: 14px; border: none; border-radius: 12px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-main { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
+        .btn-main:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-reset { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); flex: 0.4; }
+
+        /* History List */
+        .history-box { width: 100%; max-width: 600px; }
+        .history-item {
+            background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); border-radius: 15px;
+            padding: 15px; margin-bottom: 15px;
+            display: flex; flex-direction: column; gap: 10px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .item-header { display: flex; justify-content: space-between; align-items: center; }
+        .short-link { font-size: 18px; font-weight: bold; color: var(--primary); text-decoration: none; }
+        .label-text { font-size: 14px; color: #94a3b8; }
+
+        .item-actions { display: flex; gap: 8px; justify-content: flex-end; }
+        .action-btn { background: rgba(255,255,255,0.05); color: #fff; padding: 6px 12px; border: 1px solid var(--glass-border); border-radius: 6px; font-size: 12px; cursor: pointer; }
+        .action-btn:hover { background: rgba(255,255,255,0.2); }
+        .del-btn { color: #ff4d4d; border-color: #ff4d4d; }
+
+        /* Modal */
+        .modal-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .modal {
+            background: #1e293b; border: 1px solid var(--primary); padding: 30px;
+            border-radius: 20px; width: 90%; max-width: 400px; text-align: center;
+        }
+        .modal h3 { color: var(--primary); margin-top: 0; }
+        .modal p { color: #cbd5e1; word-break: break-all; font-size: 14px; }
+        .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .confirm-btn { background: var(--primary); color: #000; font-weight: bold; }
+        .cancel-btn { background: #ef4444; color: white; }
+
+        @media (max-width: 480px) {
+            .glass-container { padding: 20px; }
+            h1 { font-size: 20px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>লিংক শর্টনার</h2>
-    
-    <div class="input-group">
-        <label>আসল লিংক (Long URL):</label>
-        <input type="url" id="longUrl" placeholder="https://example.com/very-long-link">
+    <div class="glass-container">
+        <h1>PREMIUM LINKER</h1>
+        <div class="input-box">
+            <input type="url" id="longUrl" placeholder="আপনার আসল লিংক দিন...">
+        </div>
+        <div class="input-box">
+            <input type="text" id="customName" placeholder="লিংকের নাম বা আইডি দিন (যেমন: MyVideo)">
+        </div>
+        <div class="btn-group">
+            <button class="btn-main" onclick="generateLink()" id="btnText">তৈরি করুন</button>
+            <button class="btn-reset" onclick="resetForm()">রিসেট</button>
+        </div>
     </div>
 
-    <div class="input-group">
-        <label>পছন্দমতো আইডি (Custom ID - ঐচ্ছিক):</label>
-        <input type="text" id="customAlias" placeholder="যেমন: mylink123">
+    <div class="history-box" id="historyBox">
+        <!-- ইতিহাস এখানে লোড হবে -->
     </div>
 
-    <div class="btn-group">
-        <button id="shortenBtn" onclick="makeShort()">তৈরি করুন</button>
-        <button class="reset-btn" onclick="resetAll()">রিসেট</button>
+    <!-- Confirmation Modal -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal">
+            <h3>লিংক ভিউয়ার</h3>
+            <p>আপনি কি এই লিংকে প্রবেশ করতে চান?</p>
+            <p id="previewUrl" style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;"></p>
+            <div class="modal-btns">
+                <button class="confirm-btn" id="confirmBtn">হ্যাঁ, চলুন</button>
+                <button class="cancel-btn" onclick="closeModal()">না, থাক</button>
+            </div>
+        </div>
     </div>
 
-    <div id="resultArea">
-        <span>আপনার ছোট লিংক:</span>
-        <span id="shortUrl" class="short-url"></span>
-        <button class="copy-btn" onclick="copyUrl()">কপি করুন</button>
-    </div>
-</div>
+    <script>
+        window.onload = loadHistory;
 
-<script>
-    async function makeShort() {
-        let longUrl = document.getElementById('longUrl').value.trim();
-        let alias = document.getElementById('customAlias').value.trim();
-        const btn = document.getElementById('shortenBtn');
-        const resultArea = document.getElementById('resultArea');
-        const shortUrlSpan = document.getElementById('shortUrl');
+        async function generateLink() {
+            let url = document.getElementById('longUrl').value.trim();
+            let label = document.getElementById('customName').value.trim();
+            const btn = document.getElementById('btnText');
 
-        if (!longUrl) { alert("দয়া করে আসল লিংকটি দিন!"); return; }
-        if (!longUrl.startsWith('http')) { longUrl = 'https://' + longUrl; }
+            if (!url) return alert("দয়া করে লিংক দিন!");
+            if (!url.startsWith('http')) url = 'https://' + url;
 
-        btn.disabled = true;
-        btn.innerText = "কাজ হচ্ছে...";
+            btn.innerText = "লোডিং...";
+            btn.disabled = true;
 
-        try {
-            // CORS Proxy ব্যবহার করে রিকোয়েস্ট পাঠানো
-            const proxy = "https://api.allorigins.win/get?url=";
-            let apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
-            
-            // যদি ইউজার নিজের আইডি দেয়
-            if (alias) {
-                apiUrl += `&shorturl=${encodeURIComponent(alias)}`;
+            try {
+                // is.gd বা v.gd কাজ না করলে অল্টারনেটিভ প্রক্সি ব্যবহার
+                const proxy = "https://api.allorigins.win/get?url=";
+                const api = `https://v.gd/create.php?format=json&url=${encodeURIComponent(url)}&shorturl=${encodeURIComponent(label)}`;
+                
+                const response = await fetch(proxy + encodeURIComponent(api));
+                const data = await response.json();
+                const result = JSON.parse(data.contents);
+
+                if (result.shorturl) {
+                    saveLink(label || "Untitled", result.shorturl, url);
+                    resetForm();
+                    loadHistory();
+                } else {
+                    alert("সমস্যা: " + (result.errormessage || "আইডিটি অন্য কেউ ব্যবহার করছে।"));
+                }
+            } catch (err) {
+                alert("নেটওয়ার্ক সমস্যা! অনুগ্রহ করে v.gd বা is.gd আপনার দেশে ব্লক কি না চেক করুন।");
+            } finally {
+                btn.innerText = "তৈরি করুন";
+                btn.disabled = false;
             }
-
-            const response = await fetch(proxy + encodeURIComponent(apiUrl));
-            const data = await response.json();
-            const result = JSON.parse(data.contents);
-
-            if (result.shorturl) {
-                shortUrlSpan.innerText = result.shorturl;
-                resultArea.style.display = "block";
-            } else if (result.errormessage) {
-                alert("ভুল: " + result.errormessage);
-            }
-        } catch (error) {
-            alert("সার্ভার কানেকশন সমস্যা! আবার চেষ্টা করুন।");
-        } finally {
-            btn.disabled = false;
-            btn.innerText = "তৈরি করুন";
         }
-    }
 
-    function resetAll() {
-        document.getElementById('longUrl').value = "";
-        document.getElementById('customAlias').value = "";
-        document.getElementById('resultArea').style.display = "none";
-        document.getElementById('shortenBtn').disabled = false;
-        document.getElementById('shortenBtn').innerText = "তৈরি করুন";
-    }
+        function saveLink(name, short, long) {
+            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
+            history.unshift({ name, short, long, id: Date.now() });
+            localStorage.setItem('eliteLinks', JSON.stringify(history));
+        }
 
-    function copyUrl() {
-        const text = document.getElementById('shortUrl').innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("লিংকটি কপি হয়েছে!");
-        });
-    }
-</script>
+        function loadHistory() {
+            const box = document.getElementById('historyBox');
+            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
+            box.innerHTML = history.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো ডাটা নেই</p>";
 
+            history.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "history-item";
+                div.innerHTML = `
+                    <div class="item-header">
+                        <span class="label-text" id="label-${item.id}">${item.name}</span>
+                        <a href="javascript:void(0)" class="short-link" onclick="askPermission('${item.long}')">${item.short}</a>
+                    </div>
+                    <div class="item-actions">
+                        <button class="action-btn" onclick="copy('${item.short}')">কপি</button>
+                        <button class="action-btn" onclick="editLabel(${item.id})">এডিট</button>
+                        <button class="action-btn del-btn" onclick="deleteItem(${item.id})">মুছুন</button>
+                    </div>
+                `;
+                box.appendChild(div);
+            });
+        }
+
+        function askPermission(url) {
+            document.getElementById('previewUrl').innerText = url;
+            document.getElementById('modalBg').style.display = 'flex';
+            document.getElementById('confirmBtn').onclick = () => {
+                window.open(url, '_blank');
+                closeModal();
+            };
+        }
+
+        function closeModal() { document.getElementById('modalBg').style.display = 'none'; }
+
+        function copy(text) {
+            navigator.clipboard.writeText(text);
+            alert("লিংক কপি হয়েছে!");
+        }
+
+        function deleteItem(id) {
+            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
+            history = history.filter(i => i.id !== id);
+            localStorage.setItem('eliteLinks', JSON.stringify(history));
+            loadHistory();
+        }
+
+        function editLabel(id) {
+            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
+            let item = history.find(i => i.id === id);
+            let newName = prompt("লিংকের নতুন নাম দিন:", item.name);
+            if (newName) {
+                item.name = newName;
+                localStorage.setItem('eliteLinks', JSON.stringify(history));
+                loadHistory();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('longUrl').value = "";
+            document.getElementById('customName').value = "";
+        }
+    </script>
 </body>
 </html>
