@@ -3,142 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>এডিটেবল লিংক শর্টনার</title>
+    <title>প্রফেশনাল লিংক ম্যানেজার</title>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; transition: 0.3s; }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
             background: #0f172a; color: white; 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 20px; min-height: 100vh; margin: 0;
         }
         .container { 
-            background: #1e293b; padding: 30px; border-radius: 20px; 
+            background: #1e293b; padding: 25px; border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            width: 100%; max-width: 450px; text-align: center;
+            width: 100%; max-width: 500px; text-align: center; margin-bottom: 30px;
         }
-        h2 { color: #38bdf8; margin-bottom: 20px; font-size: 24px; }
-        
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #94a3b8; font-size: 14px; }
-        
+        h2 { color: #38bdf8; margin-bottom: 20px; }
         input { 
-            width: 100%; padding: 12px; border: 1px solid #334155; 
-            border-radius: 8px; background: #0f172a; color: white; 
-            font-size: 16px; outline: none; transition: 0.3s;
+            width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #334155; 
+            border-radius: 8px; background: #0f172a; color: white; outline: none;
         }
         input:focus { border-color: #38bdf8; }
-
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        
+        .btn-group { display: flex; gap: 10px; }
         button { 
-            flex: 2; padding: 12px; border: none; border-radius: 8px; 
-            background: #38bdf8; color: #0f172a; 
-            font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s;
+            flex: 1; padding: 12px; border: none; border-radius: 8px; 
+            background: #38bdf8; color: #0f172a; font-weight: bold; cursor: pointer;
         }
         button:hover { background: #0ea5e9; }
-        
-        .reset-btn { 
-            flex: 1; background: #ef4444; color: white;
-        }
+        .reset-btn { background: #ef4444; color: white; }
         .reset-btn:hover { background: #dc2626; }
 
-        #resultArea { 
-            margin-top: 25px; display: none; padding: 20px; 
-            background: #0f172a; border-radius: 10px; border: 1px dashed #38bdf8;
-        }
-        .short-url { 
-            color: #f472b6; font-weight: bold; font-size: 18px; 
-            display: block; margin-bottom: 10px; word-break: break-all;
-        }
-        .copy-btn { 
-            background: #10b981; color: white; padding: 8px 15px; font-size: 14px; width: auto;
-        }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        /* History Table Style */
+        .history-container { width: 100%; max-width: 800px; background: #1e293b; border-radius: 15px; padding: 20px; overflow-x: auto; }
+        h3 { border-bottom: 1px solid #334155; padding-bottom: 10px; color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; font-size: 14px; }
+        th { color: #94a3b8; }
+        .short-link-cell { color: #f472b6; font-weight: bold; }
+        .action-btns { display: flex; gap: 5px; }
+        .small-btn { padding: 5px 10px; font-size: 12px; border-radius: 5px; cursor: pointer; border: none; }
+        .copy-btn { background: #10b981; color: white; }
+        .del-btn { background: #ef4444; color: white; }
+        .edit-btn { background: #f59e0b; color: white; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>লিংক শর্টনার1</h2>
+    <h2>লিংক শর্টনার + হিস্টোরি</h2>
+    <input type="url" id="longUrl" placeholder="আসল লিংকটি দিন...">
+    <input type="text" id="customAlias" placeholder="পছন্দমতো আইডি দিন (ঐচ্ছিক)...">
     
-    <div class="input-group">
-        <label>আসল লিংক (Long URL):</label>
-        <input type="url" id="longUrl" placeholder="https://example.com/very-long-link">
-    </div>
-
-    <div class="input-group">
-        <label>পছন্দমতো আইডি (Custom ID - ঐচ্ছিক):</label>
-        <input type="text" id="customAlias" placeholder="যেমন: mylink123">
-    </div>
-
     <div class="btn-group">
-        <button id="shortenBtn" onclick="makeShort()">তৈরি করুন</button>
-        <button class="reset-btn" onclick="resetAll()">রিসেট</button>
-    </div>
-
-    <div id="resultArea">
-        <span>আপনার ছোট লিংক:</span>
-        <span id="shortUrl" class="short-url"></span>
-        <button class="copy-btn" onclick="copyUrl()">কপি করুন</button>
+        <button id="mainBtn" onclick="generateLink()">তৈরি করুন</button>
+        <button class="reset-btn" onclick="resetInputs()">রিসেট</button>
     </div>
 </div>
 
+<div class="history-container">
+    <h3>তৈরি করা লিংকসমূহ</h3>
+    <table id="historyTable">
+        <thead>
+            <tr>
+                <th>আসল লিংক</th>
+                <th>ছোট লিংক</th>
+                <th>অ্যাকশন</th>
+            </tr>
+        </thead>
+        <tbody id="historyBody">
+            <!-- ডাটা এখানে জমা হবে -->
+        </tbody>
+    </table>
+    <button onclick="clearAllHistory()" style="margin-top: 15px; background: #334155; color: white; width: auto; padding: 8px 15px;" class="small-btn">সব হিস্টোরি মুছুন</button>
+</div>
+
 <script>
-    async function makeShort() {
+    // পেজ লোড হলে হিস্টোরি দেখানো
+    window.onload = loadHistory;
+
+    async function generateLink() {
         let longUrl = document.getElementById('longUrl').value.trim();
         let alias = document.getElementById('customAlias').value.trim();
-        const btn = document.getElementById('shortenBtn');
-        const resultArea = document.getElementById('resultArea');
-        const shortUrlSpan = document.getElementById('shortUrl');
+        const btn = document.getElementById('mainBtn');
 
-        if (!longUrl) { alert("দয়া করে আসল লিংকটি দিন!"); return; }
-        if (!longUrl.startsWith('http')) { longUrl = 'https://' + longUrl; }
+        if (!longUrl) return alert("আসল লিংক দিন!");
+        if (!longUrl.startsWith('http')) longUrl = 'https://' + longUrl;
 
         btn.disabled = true;
-        btn.innerText = "কাজ হচ্ছে...";
+        btn.innerText = "প্রসেসিং...";
 
         try {
-            // CORS Proxy ব্যবহার করে রিকোয়েস্ট পাঠানো
             const proxy = "https://api.allorigins.win/get?url=";
             let apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
-            
-            // যদি ইউজার নিজের আইডি দেয়
-            if (alias) {
-                apiUrl += `&shorturl=${encodeURIComponent(alias)}`;
-            }
+            if (alias) apiUrl += `&shorturl=${encodeURIComponent(alias)}`;
 
             const response = await fetch(proxy + encodeURIComponent(apiUrl));
             const data = await response.json();
             const result = JSON.parse(data.contents);
 
             if (result.shorturl) {
-                shortUrlSpan.innerText = result.shorturl;
-                resultArea.style.display = "block";
-            } else if (result.errormessage) {
-                alert("ভুল: " + result.errormessage);
+                saveToLocalStorage(longUrl, result.shorturl);
+                loadHistory();
+                resetInputs();
+            } else {
+                alert("ভুল: " + (result.errormessage || "এই আইডিটি ইতিমধ্যে কেউ ব্যবহার করেছে!"));
             }
-        } catch (error) {
-            alert("সার্ভার কানেকশন সমস্যা! আবার চেষ্টা করুন।");
+        } catch (e) {
+            alert("সার্ভার সমস্যা! আবার চেষ্টা করুন।");
         } finally {
             btn.disabled = false;
             btn.innerText = "তৈরি করুন";
         }
     }
 
-    function resetAll() {
-        document.getElementById('longUrl').value = "";
-        document.getElementById('customAlias').value = "";
-        document.getElementById('resultArea').style.display = "none";
-        document.getElementById('shortenBtn').disabled = false;
-        document.getElementById('shortenBtn').innerText = "তৈরি করুন";
+    function saveToLocalStorage(long, short) {
+        let history = JSON.parse(localStorage.getItem('linkHistory') || "[]");
+        history.unshift({ long, short, id: Date.now() });
+        localStorage.setItem('linkHistory', JSON.stringify(history));
     }
 
-    function copyUrl() {
-        const text = document.getElementById('shortUrl').innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("লিংকটি কপি হয়েছে!");
+    function loadHistory() {
+        const body = document.getElementById('historyBody');
+        let history = JSON.parse(localStorage.getItem('linkHistory') || "[]");
+        body.innerHTML = "";
+
+        history.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td title="${item.long}">${item.long.substring(0, 30)}...</td>
+                <td class="short-link-cell">${item.short}</td>
+                <td class="action-btns">
+                    <button class="small-btn copy-btn" onclick="copyText('${item.short}')">কপি</button>
+                    <button class="small-btn edit-btn" onclick="editLabel(${item.id})">এডিট</button>
+                    <button class="small-btn del-btn" onclick="deleteLink(${item.id})">মুছুন</button>
+                </td>
+            `;
+            body.appendChild(row);
         });
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+        alert("কপি হয়েছে!");
+    }
+
+    function deleteLink(id) {
+        let history = JSON.parse(localStorage.getItem('linkHistory') || "[]");
+        history = history.filter(item => item.id !== id);
+        localStorage.setItem('linkHistory', JSON.stringify(history));
+        loadHistory();
+    }
+
+    function editLabel(id) {
+        let history = JSON.parse(localStorage.getItem('linkHistory') || "[]");
+        let item = history.find(i => i.id === id);
+        let newLong = prompt("আসল লিংকটি এডিট করুন:", item.long);
+        if (newLong) {
+            item.long = newLong;
+            localStorage.setItem('linkHistory', JSON.stringify(history));
+            loadHistory();
+        }
+    }
+
+    function resetInputs() {
+        document.getElementById('longUrl').value = "";
+        document.getElementById('customAlias').value = "";
+    }
+
+    function clearAllHistory() {
+        if (confirm("আপনি কি সব হিস্টোরি মুছে ফেলতে চান?")) {
+            localStorage.removeItem('linkHistory');
+            loadHistory();
+        }
     }
 </script>
 
