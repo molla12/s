@@ -3,80 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নিজস্ব লিংক শর্টনার</title>
+    <title>প্রফেশনাল লিংক শর্টনার</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: #1e293b; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 400px; text-align: center; }
-        h2 { color: #38bdf8; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: white; box-sizing: border-box; outline: none; }
-        input:focus { border-color: #38bdf8; }
-        button { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #38bdf8; color: #0f172a; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #0ea5e9; }
-        #result { margin-top: 20px; display: none; padding: 15px; border: 1px dashed #38bdf8; border-radius: 8px; background: #1e293b; }
-        .short-url { color: #f472b6; font-weight: bold; font-size: 18px; display: block; margin-bottom: 10px; word-break: break-all; }
-        .copy-btn { background: #10b981; color: white; padding: 8px; font-size: 14px; width: auto; display: inline-block; margin-top: 5px; }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #121212; color: white; 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; margin: 0; padding: 15px;
+        }
+        .container { 
+            background: #1e1e1e; padding: 40px; border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); 
+            width: 100%; max-width: 450px; text-align: center;
+            border: 1px solid #333;
+        }
+        h2 { color: #00d2ff; margin-bottom: 25px; font-size: 28px; }
+        input { 
+            width: 100%; padding: 15px; margin-bottom: 20px; 
+            border: 2px solid #333; border-radius: 10px; 
+            background: #252525; color: white; font-size: 16px; outline: none;
+        }
+        input:focus { border-color: #00d2ff; }
+        button { 
+            width: 100%; padding: 15px; border: none; border-radius: 10px; 
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%); 
+            color: white; font-weight: bold; font-size: 18px; cursor: pointer; 
+            transition: 0.3s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        button:disabled { background: #555; cursor: not-allowed; }
+        #resultArea { 
+            margin-top: 25px; display: none; padding: 20px; 
+            background: #252525; border-radius: 10px; border: 1px dashed #00d2ff;
+        }
+        .short-url { 
+            color: #ff007f; font-weight: bold; font-size: 20px; 
+            display: block; margin-bottom: 15px; word-break: break-all;
+        }
+        .copy-btn { 
+            background: #28a745; font-size: 14px; padding: 10px; width: auto; display: inline-block;
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
+<div class="container">
     <h2>লিংক শর্টনার</h2>
-    <input type="url" id="longUrl" placeholder="লিংকটি এখানে পেস্ট করুন (যেমন: google.com)" required>
-    <button id="btn" onclick="shorten()">লিংক ছোট করুন</button>
+    <input type="url" id="longUrl" placeholder="আপনার লিংকটি পেস্ট করুন..." required>
+    <button id="shortenBtn" onclick="processLink()">লিংক ছোট করুন</button>
 
-    <div id="result">
-        <span class="short-url" id="shortUrl"></span>
-        <button class="copy-btn" onclick="copyText()">কপি করুন</button>
+    <div id="resultArea">
+        <span id="shortUrl" class="short-url"></span>
+        <button class="copy-btn" onclick="copyToClipboard()">লিংক কপি করুন</button>
     </div>
 </div>
 
 <script>
-    async function shorten() {
-        let longUrl = document.getElementById('longUrl').value.trim();
-        const resultDiv = document.getElementById('result');
-        const shortUrlText = document.getElementById('shortUrl');
-        const btn = document.getElementById('btn');
+    async function processLink() {
+        let url = document.getElementById('longUrl').value.trim();
+        const btn = document.getElementById('shortenBtn');
+        const resultArea = document.getElementById('resultArea');
+        const shortUrlSpan = document.getElementById('shortUrl');
 
-        if (!longUrl) { alert("দয়া করে একটি লিংক দিন!"); return; }
+        if (!url) { alert("দয়া করে একটি লিংক দিন!"); return; }
 
-        // URL ফরম্যাট ঠিক করা
-        if (!longUrl.startsWith('http')) {
-            longUrl = 'https://' + longUrl;
-        }
+        // http না থাকলে যোগ করা
+        if (!url.startsWith('http')) { url = 'https://' + url; }
 
-        btn.innerText = "প্রসেসিং...";
         btn.disabled = true;
+        btn.innerText = "কাজ চলছে...";
+        resultArea.style.display = "none";
 
         try {
-            // GoTiny API ব্যবহার করা হচ্ছে যা খুব ফাস্ট এবং CORS ফ্রেন্ডলি
-            const response = await fetch('https://gotiny.cc/api', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ input: longUrl })
-            });
+            // CORS সমস্যা সমাধানের জন্য অল-অরিজিন প্রক্সি ব্যবহার করা হয়েছে
+            const proxy = "https://api.allorigins.win/get?url=";
+            const targetApi = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`;
             
-            const data = await response.json();
-
-            if (data && data[0] && data[0].code) {
-                const shortUrl = "https://gotiny.cc/" + data[0].code;
-                shortUrlText.innerText = shortUrl;
-                resultDiv.style.display = "block";
+            const response = await fetch(proxy + encodeURIComponent(targetApi));
+            
+            if (response.ok) {
+                const data = await response.json();
+                const shortUrl = data.contents; // TinyURL সরাসরি শর্ট লিংক ফেরত দেয়
+                
+                if (shortUrl && shortUrl.includes("tinyurl.com")) {
+                    shortUrlSpan.innerText = shortUrl;
+                    resultArea.style.display = "block";
+                } else {
+                    throw new Error("Invalid Response");
+                }
             } else {
-                alert("দুঃখিত! এই লিংকটি ছোট করা যাচ্ছে না।");
+                throw new Error("Network Error");
             }
         } catch (error) {
             console.error(error);
-            alert("নেটওয়ার্ক সমস্যা! আপনার ইন্টারনেট চেক করুন।");
+            alert("দুঃখিত! সার্ভার রিকোয়েস্ট ব্লক করছে। আপনার ইন্টারনেট চেক করুন বা অন্য ব্রাউজারে চেষ্টা করুন।");
         } finally {
-            btn.innerText = "লিংক ছোট করুন";
             btn.disabled = false;
+            btn.innerText = "লিংক ছোট করুন";
         }
     }
 
-    function copyText() {
+    function copyToClipboard() {
         const text = document.getElementById('shortUrl').innerText;
         navigator.clipboard.writeText(text).then(() => {
-            alert("লিংক কপি হয়েছে!");
+            alert("লিংকটি কপি হয়েছে!");
         });
     }
 </script>
