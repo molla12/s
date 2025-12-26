@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>এলিট লিংক ড্যাশবোর্ড</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --accent: #f472b6;
         }
 
-        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
             margin: 0; padding: 20px; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #0f172a);
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #7c3aed, #2563eb);
             background-size: 400% 400%;
-            animation: gradientAnim 10s ease infinite;
+            animation: gradientAnim 15s ease infinite;
             color: #fff; overflow-x: hidden;
         }
 
@@ -30,117 +31,121 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glassmorphism Card */
-        .glass-container {
+        /* Glassmorphism Main Card */
+        .main-card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 24px;
+            padding: 40px;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
             margin-bottom: 30px;
-            animation: slideUp 0.8s ease-out;
+            animation: slideIn 1s ease-out;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        h1 { text-align: center; font-size: 24px; margin-bottom: 25px; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1 { font-weight: 600; font-size: 26px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
 
-        .input-box { width: 100%; margin-bottom: 15px; }
+        .input-group { width: 100%; margin-bottom: 20px; }
         input {
-            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border); border-radius: 12px;
-            color: white; font-size: 15px; outline: none; transition: 0.3s;
+            width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border); border-radius: 14px;
+            color: white; font-size: 16px; outline: none; transition: 0.4s;
         }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
 
-        .btn-group { display: flex; gap: 10px; }
+        .btn-flex { display: flex; gap: 12px; }
         button {
-            flex: 1; padding: 14px; border: none; border-radius: 12px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            flex: 1; padding: 15px; border: none; border-radius: 14px;
+            font-weight: 600; cursor: pointer; transition: 0.3s;
         }
         .btn-main { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
-        .btn-main:hover { transform: scale(1.02); opacity: 0.9; }
-        .btn-reset { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); flex: 0.4; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 242, 254, 0.4); }
+        .btn-reset { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid var(--glass-border); flex: 0.5; }
 
-        /* History List */
-        .history-box { width: 100%; max-width: 600px; }
-        .history-item {
-            background: var(--glass); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); border-radius: 15px;
-            padding: 15px; margin-bottom: 15px;
-            display: flex; flex-direction: column; gap: 10px;
-            animation: fadeIn 0.5s ease-in;
+        /* Link History List */
+        .history-section { width: 100%; max-width: 600px; }
+        .history-card {
+            background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 18px;
+            padding: 20px; margin-bottom: 15px;
+            display: flex; flex-direction: column; gap: 12px;
+            animation: fadeIn 0.6s ease-in;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .item-header { display: flex; justify-content: space-between; align-items: center; }
-        .short-link { font-size: 18px; font-weight: bold; color: var(--primary); text-decoration: none; }
-        .label-text { font-size: 14px; color: #94a3b8; }
+        .link-header { display: flex; justify-content: space-between; align-items: center; }
+        .label-badge { background: var(--secondary); color: #000; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        .short-url { font-size: 18px; color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
 
-        .item-actions { display: flex; gap: 8px; justify-content: flex-end; }
-        .action-btn { background: rgba(255,255,255,0.05); color: #fff; padding: 6px 12px; border: 1px solid var(--glass-border); border-radius: 6px; font-size: 12px; cursor: pointer; }
-        .action-btn:hover { background: rgba(255,255,255,0.2); }
-        .del-btn { color: #ff4d4d; border-color: #ff4d4d; }
+        .action-btns { display: flex; gap: 10px; justify-content: flex-end; }
+        .small-btn { background: rgba(255,255,255,0.1); color: #fff; padding: 8px 14px; border: 1px solid var(--glass-border); border-radius: 10px; font-size: 12px; cursor: pointer; }
+        .small-btn:hover { background: rgba(255,255,255,0.2); }
+        .btn-edit { color: #fbbf24; border-color: #fbbf24; }
+        .btn-del { color: #f87171; border-color: #f87171; }
 
-        /* Modal */
-        .modal-bg {
+        /* Advanced Modal */
+        .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000;
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
         }
         .modal {
-            background: #1e293b; border: 1px solid var(--primary); padding: 30px;
-            border-radius: 20px; width: 90%; max-width: 400px; text-align: center;
+            background: #1e293b; border: 1px solid var(--primary);
+            padding: 40px; border-radius: 30px; width: 90%; max-width: 420px; text-align: center;
         }
-        .modal h3 { color: var(--primary); margin-top: 0; }
-        .modal p { color: #cbd5e1; word-break: break-all; font-size: 14px; }
-        .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .confirm-btn { background: var(--primary); color: #000; font-weight: bold; }
-        .cancel-btn { background: #ef4444; color: white; }
+        .modal h3 { margin-top: 0; color: var(--primary); }
+        .modal p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
+        .dest-link { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; font-size: 13px; color: #fff; margin: 20px 0; word-break: break-all; }
+        .modal-footer { display: flex; gap: 15px; }
 
-        @media (max-width: 480px) {
-            .glass-container { padding: 20px; }
+        /* Mobile Friendly */
+        @media (max-width: 500px) {
+            .main-card { padding: 25px; }
             h1 { font-size: 20px; }
+            .btn-flex { flex-direction: column; }
+            .btn-reset { flex: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glass-container">
-        <h1>PREMIUM LINKER</h1>
-        <div class="input-box">
-            <input type="url" id="longUrl" placeholder="আপনার আসল লিংক দিন...">
+    <div class="main-card">
+        <h1>LINK SHORTENER</h1>
+        <div class="input-group">
+            <input type="url" id="longUrl" placeholder="বড় লিংকটি এখানে দিন...">
         </div>
-        <div class="input-box">
-            <input type="text" id="customName" placeholder="লিংকের নাম বা আইডি দিন (যেমন: MyVideo)">
+        <div class="input-group">
+            <input type="text" id="linkName" placeholder="লিংকের একটি নাম দিন (যেমন: FB Profile)">
         </div>
-        <div class="btn-group">
-            <button class="btn-main" onclick="generateLink()" id="btnText">তৈরি করুন</button>
+        <div class="btn-flex">
+            <button class="btn-main" onclick="shortenLink()" id="mainBtn">তৈরি করুন</button>
             <button class="btn-reset" onclick="resetForm()">রিসেট</button>
         </div>
     </div>
 
-    <div class="history-box" id="historyBox">
-        <!-- ইতিহাস এখানে লোড হবে -->
+    <div class="history-section" id="historyList">
+        <!-- লিংকের ইতিহাস এখানে আসবে -->
     </div>
 
-    <!-- Confirmation Modal -->
-    <div class="modal-bg" id="modalBg">
+    <!-- Redirect Confirmation Modal -->
+    <div class="overlay" id="confirmModal">
         <div class="modal">
             <h3>লিংক ভিউয়ার</h3>
-            <p>আপনি কি এই লিংকে প্রবেশ করতে চান?</p>
-            <p id="previewUrl" style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;"></p>
-            <div class="modal-btns">
-                <button class="confirm-btn" id="confirmBtn">হ্যাঁ, চলুন</button>
-                <button class="cancel-btn" onclick="closeModal()">না, থাক</button>
+            <p>আপনি কি এই গন্তব্যে যেতে নিশ্চিত?</p>
+            <div class="dest-link" id="targetUrl"></div>
+            <div class="modal-footer">
+                <button class="btn-main" id="goBtn">হ্যাঁ, চলুন</button>
+                <button class="btn-reset" onclick="closeModal()">না, থাক</button>
             </div>
         </div>
     </div>
@@ -148,107 +153,107 @@
     <script>
         window.onload = loadHistory;
 
-        async function generateLink() {
+        async function shortenLink() {
             let url = document.getElementById('longUrl').value.trim();
-            let label = document.getElementById('customName').value.trim();
-            const btn = document.getElementById('btnText');
+            let label = document.getElementById('linkName').value.trim() || "Untitled";
+            const btn = document.getElementById('mainBtn');
 
-            if (!url) return alert("দয়া করে লিংক দিন!");
+            if (!url) return alert("অনুগ্রহ করে একটি লিংক দিন!");
             if (!url.startsWith('http')) url = 'https://' + url;
 
-            btn.innerText = "লোডিং...";
+            btn.innerText = "প্রসেসিং...";
             btn.disabled = true;
 
             try {
-                // is.gd বা v.gd কাজ না করলে অল্টারনেটিভ প্রক্সি ব্যবহার
+                // TinyURL API ব্যবহার করে লিংক ছোট করা
                 const proxy = "https://api.allorigins.win/get?url=";
-                const api = `https://v.gd/create.php?format=json&url=${encodeURIComponent(url)}&shorturl=${encodeURIComponent(label)}`;
+                const api = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`;
                 
                 const response = await fetch(proxy + encodeURIComponent(api));
                 const data = await response.json();
-                const result = JSON.parse(data.contents);
+                const shortLink = data.contents;
 
-                if (result.shorturl) {
-                    saveLink(label || "Untitled", result.shorturl, url);
+                if (shortLink && shortLink.startsWith("https://tinyurl.com")) {
+                    saveToLocal(label, shortLink, url);
                     resetForm();
                     loadHistory();
                 } else {
-                    alert("সমস্যা: " + (result.errormessage || "আইডিটি অন্য কেউ ব্যবহার করছে।"));
+                    alert("লিংক তৈরি করা সম্ভব হয়নি। আবার চেষ্টা করুন।");
                 }
             } catch (err) {
-                alert("নেটওয়ার্ক সমস্যা! অনুগ্রহ করে v.gd বা is.gd আপনার দেশে ব্লক কি না চেক করুন।");
+                alert("সার্ভার সমস্যা! আপনার ইন্টারনেট চেক করুন।");
             } finally {
                 btn.innerText = "তৈরি করুন";
                 btn.disabled = false;
             }
         }
 
-        function saveLink(name, short, long) {
-            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
-            history.unshift({ name, short, long, id: Date.now() });
-            localStorage.setItem('eliteLinks', JSON.stringify(history));
+        function saveToLocal(name, short, long) {
+            let list = JSON.parse(localStorage.getItem('myLinksHistory') || "[]");
+            list.unshift({ name, short, long, id: Date.now() });
+            localStorage.setItem('myLinksHistory', JSON.stringify(list));
         }
 
         function loadHistory() {
-            const box = document.getElementById('historyBox');
-            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
-            box.innerHTML = history.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো ডাটা নেই</p>";
+            const listContainer = document.getElementById('historyList');
+            let list = JSON.parse(localStorage.getItem('myLinksHistory') || "[]");
+            listContainer.innerHTML = list.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো ডাটা নেই</p>";
 
-            history.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "history-item";
-                div.innerHTML = `
-                    <div class="item-header">
-                        <span class="label-text" id="label-${item.id}">${item.name}</span>
-                        <a href="javascript:void(0)" class="short-link" onclick="askPermission('${item.long}')">${item.short}</a>
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "history-card";
+                card.innerHTML = `
+                    <div class="link-header">
+                        <span class="label-badge">${item.name}</span>
+                        <a href="javascript:void(0)" class="short-url" onclick="showModal('${item.long}')">${item.short}</a>
                     </div>
-                    <div class="item-actions">
-                        <button class="action-btn" onclick="copy('${item.short}')">কপি</button>
-                        <button class="action-btn" onclick="editLabel(${item.id})">এডিট</button>
-                        <button class="action-btn del-btn" onclick="deleteItem(${item.id})">মুছুন</button>
+                    <div class="action-btns">
+                        <button class="small-btn" onclick="copy('${item.short}')">কপি</button>
+                        <button class="small-btn btn-edit" onclick="editLabel(${item.id})">রিনেম</button>
+                        <button class="small-btn btn-del" onclick="deleteLink(${item.id})">মুছুন</button>
                     </div>
                 `;
-                box.appendChild(div);
+                listContainer.appendChild(card);
             });
         }
 
-        function askPermission(url) {
-            document.getElementById('previewUrl').innerText = url;
-            document.getElementById('modalBg').style.display = 'flex';
-            document.getElementById('confirmBtn').onclick = () => {
+        function showModal(url) {
+            document.getElementById('targetUrl').innerText = url;
+            document.getElementById('confirmModal').style.display = 'flex';
+            document.getElementById('goBtn').onclick = () => {
                 window.open(url, '_blank');
                 closeModal();
             };
         }
 
-        function closeModal() { document.getElementById('modalBg').style.display = 'none'; }
+        function closeModal() { document.getElementById('confirmModal').style.display = 'none'; }
 
         function copy(text) {
             navigator.clipboard.writeText(text);
-            alert("লিংক কপি হয়েছে!");
-        }
-
-        function deleteItem(id) {
-            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
-            history = history.filter(i => i.id !== id);
-            localStorage.setItem('eliteLinks', JSON.stringify(history));
-            loadHistory();
+            alert("লিংকটি কপি হয়েছে!");
         }
 
         function editLabel(id) {
-            let history = JSON.parse(localStorage.getItem('eliteLinks') || "[]");
-            let item = history.find(i => i.id === id);
+            let list = JSON.parse(localStorage.getItem('myLinksHistory') || "[]");
+            let item = list.find(l => l.id === id);
             let newName = prompt("লিংকের নতুন নাম দিন:", item.name);
             if (newName) {
                 item.name = newName;
-                localStorage.setItem('eliteLinks', JSON.stringify(history));
+                localStorage.setItem('myLinksHistory', JSON.stringify(list));
                 loadHistory();
             }
         }
 
+        function deleteLink(id) {
+            let list = JSON.parse(localStorage.getItem('myLinksHistory') || "[]");
+            list = list.filter(l => l.id !== id);
+            localStorage.setItem('myLinksHistory', JSON.stringify(list));
+            loadHistory();
+        }
+
         function resetForm() {
             document.getElementById('longUrl').value = "";
-            document.getElementById('customName').value = "";
+            document.getElementById('linkName').value = "";
         }
     </script>
 </body>
