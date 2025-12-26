@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রিমিয়াম লিংক ড্যাশবোর্ড</title>
-    <!-- Google Fonts -->
+    <title>এলিট বিটলি প্রো ড্যাশবোর্ড</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,7 +20,7 @@
         body {
             margin: 0; padding: 20px; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #0f172a, #7c3aed, #f43f5e, #12c2e9);
             background-size: 400% 400%;
             animation: gradientAnim 15s ease infinite;
             color: #fff; overflow-x: hidden;
@@ -33,66 +32,65 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glass Container */
-        .glass-card {
+        .main-card {
             background: var(--glass);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
             border-radius: 30px;
             padding: 35px; width: 100%; max-width: 500px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            text-align: center; margin-bottom: 30px;
-            animation: fadeIn 1s ease-in-out;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            text-align: center; margin-bottom: 25px;
+            animation: fadeIn 1s ease;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { font-size: 24px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
+        h1 { font-size: 24px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; color: var(--primary); }
 
-        .input-group { margin-bottom: 15px; text-align: left; }
-        label { font-size: 12px; margin-left: 5px; color: #eee; }
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { font-size: 12px; color: #cbd5e1; margin-left: 5px; }
         input {
-            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.25);
-            border: 1px solid var(--glass-border); border-radius: 14px;
-            color: white; font-size: 15px; outline: none; margin-top: 5px;
+            width: 100%; padding: 14px; margin-top: 5px;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
+            border-radius: 12px; color: white; font-size: 15px; outline: none; transition: 0.3s;
         }
         input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
 
-        .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-row { display: flex; gap: 10px; margin-top: 10px; }
         button {
-            flex: 1; padding: 14px; border: none; border-radius: 14px;
+            flex: 1; padding: 14px; border: none; border-radius: 12px;
             font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .btn-generate { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
-        .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4); }
-        .btn-reset { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--glass-border); flex: 0.4; }
+        .btn-go { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
+        .btn-go:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4); }
+        .btn-backup { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); font-size: 12px; }
 
-        /* History List */
-        .history-section { width: 100%; max-width: 600px; }
-        .history-card {
+        /* History Table */
+        .history-box { width: 100%; max-width: 700px; }
+        .item-card {
             background: var(--glass); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-radius: 20px;
             padding: 20px; margin-bottom: 15px;
-            display: flex; flex-direction: column; gap: 10px;
             animation: slideIn 0.5s ease;
         }
 
         @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 
-        .short-url { font-size: 19px; color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
-        .original-url { font-size: 11px; color: #cbd5e1; word-break: break-all; }
+        .item-title { font-size: 14px; color: #94a3b8; display: block; margin-bottom: 5px; }
+        .item-link { font-size: 18px; color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
+        .item-long { font-size: 11px; color: #cbd5e1; word-break: break-all; margin-top: 8px; }
 
-        .action-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 5px; }
-        .action-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border); padding: 7px 15px; border-radius: 10px; font-size: 12px; cursor: pointer; }
+        .action-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 15px; }
+        .action-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border); padding: 7px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; }
         .action-btn:hover { background: rgba(255,255,255,0.2); }
         .btn-edit { color: #fbbf24; border-color: #fbbf24; }
         .btn-del { color: var(--danger); border-color: var(--danger); }
 
-        /* Custom Modal (For Delete & Confirmation) */
-        .modal-overlay {
+        /* Modal Area */
+        .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
             display: none; justify-content: center; align-items: center; z-index: 9999;
         }
         .modal {
@@ -100,91 +98,93 @@
             border-radius: 25px; padding: 30px; width: 90%; max-width: 400px; text-align: center;
         }
         .modal h3 { color: var(--primary); margin-top: 0; }
-        .modal p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
         .modal-btns { display: flex; gap: 10px; margin-top: 25px; }
 
-        /* Mobile Friendly */
+        /* Hidden Input for File Import */
+        #importFile { display: none; }
+
         @media (max-width: 500px) {
-            .btn-flex { flex-direction: column; }
-            .btn-reset { flex: 1; }
+            .btn-row { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glass-card">
-        <h1>LINK MANAGER</h1>
-        <div class="input-group">
-            <label>আসল লিংক (URL)</label>
+    <div class="main-card">
+        <h1>BITLY PRO</h1>
+        <div class="form-group">
+            <label>আসল লিংক (Destination URL)</label>
             <input type="url" id="longUrl" placeholder="https://example.com/...">
         </div>
-        <div class="input-group">
-            <label>পছন্দমতো আইডি (ID / Alias)</label>
-            <input type="text" id="customAlias" placeholder="যেমন: mylink123">
+        <div class="form-group">
+            <label>লিংকের নাম (Label/Custom ID)</label>
+            <input type="text" id="customLabel" placeholder="যেমন: My Profile">
         </div>
-        <div class="btn-flex">
-            <button class="btn-generate" onclick="handleGenerate()" id="btnText">তৈরি করুন</button>
-            <button class="btn-reset" onclick="clearForm()">রিসেট</button>
+        <div class="btn-row">
+            <button class="btn-go" onclick="handleBitly()" id="mainBtn">তৈরি করুন</button>
+            <button class="btn-backup" onclick="exportHistory()">ব্যাকআপ (Export)</button>
+            <button class="btn-backup" onclick="document.getElementById('importFile').click()">রিস্টোর (Import)</button>
         </div>
+        <input type="file" id="importFile" accept=".json" onchange="importHistory(event)">
     </div>
 
-    <div class="history-section" id="linkList">
-        <!-- লিস্ট এখানে আসবে -->
+    <div class="history-box" id="listBody">
+        <!-- ইতিহাস এখানে লোড হবে -->
     </div>
 
-    <!-- Multi-purpose Modal -->
-    <div class="modal-overlay" id="customModal">
+    <!-- Universal Modal -->
+    <div class="overlay" id="modalOverlay">
         <div class="modal">
             <h3 id="mTitle">নিশ্চিত করুন</h3>
-            <p id="mDesc">আপনি কি এটি করতে চান?</p>
-            <div id="mLinkView" style="font-size: 12px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin: 15px 0; display: none; word-break: break-all;"></div>
+            <p id="mDesc" style="color:#94a3b8; font-size:14px;"></p>
             <div class="modal-btns">
-                <button class="btn-generate" id="mConfirm">হ্যাঁ</button>
-                <button class="btn-reset" onclick="closeModal()">না</button>
+                <button class="btn-go" id="mConfirm">হ্যাঁ</button>
+                <button class="btn-backup" onclick="closeModal()">না</button>
             </div>
         </div>
     </div>
 
     <script>
-        let currentEditId = null;
+        const TOKEN = "894ab7a943b13ae327edabd34aef3ba89661c6b8";
+        let editId = null;
 
         window.onload = loadData;
 
-        async function handleGenerate() {
+        async function handleBitly() {
             let long = document.getElementById('longUrl').value.trim();
-            let alias = document.getElementById('customAlias').value.trim();
-            const btn = document.getElementById('btnText');
+            let label = document.getElementById('customLabel').value.trim() || "Untitled";
+            const btn = document.getElementById('mainBtn');
 
-            if (!long) return alert("দয়া করে একটি লিংক দিন!");
+            if (!long) return alert("দয়া করে লিংক দিন!");
             if (!long.startsWith('http')) long = 'https://' + long;
 
             btn.innerText = "প্রসেসিং...";
             btn.disabled = true;
 
             try {
-                // v.gd API ব্যবহার করা হচ্ছে যা আইডি সাপোর্ট করে
-                const proxy = "https://api.allorigins.win/get?url=";
-                let apiUrl = `https://v.gd/create.php?format=json&url=${encodeURIComponent(long)}`;
-                if(alias) apiUrl += `&shorturl=${encodeURIComponent(alias)}`;
+                const response = await fetch('https://api-ssl.bitly.com/v4/shorten', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ long_url: long, domain: "bit.ly" })
+                });
 
-                const resp = await fetch(proxy + encodeURIComponent(apiUrl));
-                const data = await resp.json();
-                const result = JSON.parse(data.contents);
+                const data = await response.json();
 
-                if (result.shorturl) {
-                    // যদি আমরা এডিট মোডে থাকি, তবে আগেরটা ডিলিট করব
-                    if(currentEditId) {
-                        deleteFromLocal(currentEditId, true);
-                        currentEditId = null;
-                    }
-                    saveToLocal(alias || "Auto", result.shorturl, long);
+                if (data.link) {
+                    // যদি এডিট মোড হয়, আগেরটা ডিলিট হবে
+                    if (editId) deleteFromLocal(editId, true);
+                    
+                    saveToLocal(label, data.link, long);
                     clearForm();
                     loadData();
                 } else {
-                    alert("ভুল: " + (result.errormessage || "এই আইডিটি ইতিমধ্যে অন্য কেউ ব্যবহার করছে।"));
+                    alert("Bitly Error: " + (data.description || "সমস্যা হয়েছে।"));
                 }
-            } catch (e) {
-                alert("সার্ভার সমস্যা! ইন্টারনেট কানেকশন চেক করুন।");
+            } catch (err) {
+                alert("সার্ভার সমস্যা! ইন্টারনেট চেক করুন।");
             } finally {
                 btn.innerText = "তৈরি করুন";
                 btn.disabled = false;
@@ -192,90 +192,119 @@
         }
 
         function saveToLocal(name, short, long) {
-            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            let db = JSON.parse(localStorage.getItem('bitlyStore') || "[]");
             db.unshift({ name, short, long, id: Date.now() });
-            localStorage.setItem('premiumLinksDB', JSON.stringify(db));
+            localStorage.setItem('bitlyStore', JSON.stringify(db));
         }
 
         function loadData() {
-            const container = document.getElementById('linkList');
-            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
-            container.innerHTML = db.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো লিংক তৈরি করা হয়নি</p>";
+            const container = document.getElementById('listBody');
+            let db = JSON.parse(localStorage.getItem('bitlyStore') || "[]");
+            container.innerHTML = db.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো ডাটা নেই</p>";
 
             db.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "history-card";
+                card.className = "item-card";
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div style="flex:1">
-                            <a href="javascript:void(0)" class="short-url" onclick="askToOpen('${item.long}')">${item.short}</a>
-                            <div class="original-url">ID: ${item.name} | Dest: ${item.long}</div>
-                        </div>
-                    </div>
+                    <span class="item-title">${item.name}</span>
+                    <a href="javascript:void(0)" class="item-link" onclick="askOpen('${item.long}')">${item.short}</a>
+                    <div class="item-long">Destination: ${item.long}</div>
                     <div class="action-row">
                         <button class="action-btn" onclick="copy('${item.short}')">কপি</button>
                         <button class="action-btn btn-edit" onclick="startEdit(${item.id})">এডিট</button>
-                        <button class="action-btn btn-del" onclick="askToDelete(${item.id})">মুছুন</button>
+                        <button class="action-btn btn-del" onclick="askDelete(${item.id})">মুছুন</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function askToOpen(url) {
-            openModal("লিংক ওপেন করুন", "আপনি কি এই গন্তব্যে যেতে চান?", url, () => {
+        function askOpen(url) {
+            openModal("লিংক ওপেন করুন", "আপনি কি এই লিংকে যেতে চান?", () => {
                 window.open(url, '_blank');
                 closeModal();
             });
         }
 
-        function askToDelete(id) {
-            openModal("মুছে ফেলবেন?", "আপনি কি নিশ্চিতভাবে এই লিংকটি তালিকা থেকে মুছতে চান?", "", () => {
+        function askDelete(id) {
+            openModal("মুছে ফেলবেন?", "এটি নিশ্চিতভাবে ডিলিট করতে চান?", () => {
                 deleteFromLocal(id);
                 closeModal();
             });
         }
 
         function startEdit(id) {
-            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            let db = JSON.parse(localStorage.getItem('bitlyStore') || "[]");
             let item = db.find(x => x.id === id);
             document.getElementById('longUrl').value = item.long;
-            document.getElementById('customAlias').value = item.name === "Auto" ? "" : item.name;
-            currentEditId = id;
-            document.getElementById('btnText').innerText = "আপডেট করুন";
+            document.getElementById('customLabel').value = item.name;
+            editId = id;
+            document.getElementById('mainBtn').innerText = "আপডেট করুন";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function deleteFromLocal(id, silent = false) {
-            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            let db = JSON.parse(localStorage.getItem('bitlyStore') || "[]");
             db = db.filter(x => x.id !== id);
-            localStorage.setItem('premiumLinksDB', JSON.stringify(db));
-            if(!silent) loadData();
+            localStorage.setItem('bitlyStore', JSON.stringify(db));
+            if (!silent) loadData();
         }
 
-        function openModal(title, desc, link, onConfirm) {
+        // --- BACKUP & RESTORE ---
+        function exportHistory() {
+            const db = localStorage.getItem('bitlyStore');
+            if (!db || db === "[]") return alert("ব্যাকআপ করার মতো কোনো ডাটা নেই!");
+            
+            const blob = new Blob([db], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bitly_backup_${Date.now()}.json`;
+            a.click();
+        }
+
+        function importHistory(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (Array.isArray(data)) {
+                        localStorage.setItem('bitlyStore', JSON.stringify(data));
+                        loadData();
+                        alert("সফলভাবে রিস্টোর করা হয়েছে!");
+                    } else {
+                        alert("ভুল ফাইল ফরম্যাট!");
+                    }
+                } catch (err) {
+                    alert("ফাইলটি পড়া সম্ভব হয়নি!");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- UTILS ---
+        function openModal(title, desc, onConfirm) {
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerText = desc;
-            const linkView = document.getElementById('mLinkView');
-            if(link) { linkView.innerText = link; linkView.style.display = "block"; }
-            else { linkView.style.display = "none"; }
-            
-            document.getElementById('customModal').style.display = 'flex';
+            document.getElementById('modalOverlay').style.display = 'flex';
             document.getElementById('mConfirm').onclick = onConfirm;
         }
 
-        function closeModal() { document.getElementById('customModal').style.display = 'none'; }
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
 
-        function copy(txt) {
-            navigator.clipboard.writeText(txt);
+        function copy(t) {
+            navigator.clipboard.writeText(t);
             alert("কপি হয়েছে!");
         }
 
         function clearForm() {
             document.getElementById('longUrl').value = "";
-            document.getElementById('customAlias').value = "";
-            document.getElementById('btnText').innerText = "তৈরি করুন";
-            currentEditId = null;
+            document.getElementById('customLabel').value = "";
+            document.getElementById('mainBtn').innerText = "তৈরি করুন";
+            editId = null;
         }
     </script>
 </body>
