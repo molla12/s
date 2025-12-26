@@ -3,306 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitly Pro - Advanced Linker 🔗</title>
+    <title>Bitly Pro - Strict Custom 🔗</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --danger: #ff4b5c;
+            --success: #00e676;
+            --warning: #fbbf24;
             --bg: #0f172a;
-            --card-bg: #1e293b;
-            --primary: #3b82f6;
-            --danger: #ef4444;
-            --success: #10b981;
-            --text: #f8fafc;
-            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; transition: 0.3s; }
 
         body {
             margin: 0; padding: 20px; min-height: 100vh;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            color: var(--text); overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            background: linear-gradient(-45deg, #0f172a, #7c3aed, #f43f5e, #12c2e9);
+            background-size: 400% 400%;
+            animation: gradientAnim 15s ease infinite;
+            color: #fff; overflow-x: hidden;
         }
 
-        /* Top Header */
-        .header { display: flex; justify-content: space-between; width: 100%; max-width: 500px; margin: 0 auto 20px; align-items: center; }
-        .config-btn { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 10px; border-radius: 12px; cursor: pointer; font-size: 20px; }
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        /* Main Shortener Card */
+        .header { display: flex; justify-content: space-between; width: 100%; max-width: 500px; margin: 0 auto 20px; align-items: center; }
+        .config-toggle { background: var(--glass); border: 1px solid var(--glass-border); padding: 10px; border-radius: 12px; cursor: pointer; font-size: 18px; backdrop-filter: blur(10px); }
+
         .main-card {
-            background: var(--card-bg); border-radius: 30px; padding: 30px;
+            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(25px); border-radius: 30px; padding: 30px;
             width: 100%; max-width: 500px; margin: 0 auto;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            text-align: center;
         }
 
-        h1 { font-size: 22px; text-align: center; color: var(--primary); letter-spacing: 2px; margin-bottom: 25px; }
+        h1 { font-size: 22px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); }
 
-        .input-group { margin-bottom: 15px; text-align: left; }
-        label { font-size: 11px; color: #94a3b8; margin-bottom: 5px; display: block; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { font-size: 11px; color: #cbd5e1; margin-left: 5px; }
         input {
-            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border); border-radius: 12px;
-            color: white; font-size: 14px; outline: none;
+            width: 100%; padding: 14px; margin-top: 5px;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
+            border-radius: 12px; color: white; font-size: 14px; outline: none;
         }
         input:focus { border-color: var(--primary); }
 
-        .btn-row { display: flex; gap: 10px; margin-top: 15px; }
-        button { padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
-        
-        .btn-primary { background: var(--primary); color: #fff; flex: 1.5; }
-        .btn-random { background: #fff; color: #000; flex: 1; }
-        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: #fff; flex: 1; font-size: 12px; }
+        .status-msg { font-size: 10px; margin-top: 5px; font-weight: bold; display: block; height: 15px; }
 
-        /* Sidebar Slide Menu */
+        .btn-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        button { padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; }
+        
+        .btn-check { background: var(--warning); color: #000; flex: 1; font-size: 12px; }
+        .btn-custom { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; flex: 1.5; }
+        .btn-random { background: #fff; color: #000; flex: 1; }
+        .btn-backup { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--glass-border); flex: 1; font-size: 11px; }
+
         .sidebar {
             position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100%;
-            background: #111827; z-index: 1000; padding: 30px;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5); overflow-y: auto;
+            background: #111827; z-index: 2000; padding: 30px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8); overflow-y: auto;
         }
         .sidebar.active { right: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #374151; padding-bottom: 15px; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #374151; padding-bottom: 15px; margin-bottom: 25px; }
 
-        .config-section { margin-bottom: 25px; }
-        .section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-title span { font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-        .add-btn { background: #06b6d4; color: #000; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .token-card { background: #1f2937; padding: 15px; border-radius: 15px; border: 1px solid #374151; margin-bottom: 12px; }
+        .token-row { display: flex; gap: 10px; align-items: center; }
+        .token-row input { margin-top: 0; padding: 8px; flex: 1; }
 
-        /* Config Cards (Like your image) */
-        .item-row { background: #1f2937; padding: 15px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #374151; }
-        .key-input-container { display: flex; gap: 10px; align-items: center; }
-        .active-check { color: var(--success); cursor: pointer; }
-        .remove-btn { color: var(--danger); cursor: pointer; }
+        .history-box { width: 100%; max-width: 500px; margin-top: 25px; }
+        .item-card { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* History Items */
-        .history-box { width: 100%; max-width: 500px; margin: 30px auto; }
-        .item-card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); }
-        .copy-btn-lg { background: var(--primary); color: #fff; width: 100%; margin-top: 15px; padding: 12px; border-radius: 10px; font-weight: bold; }
+        .item-label { font-size: 10px; color: var(--primary); font-weight: bold; margin-bottom: 5px; display: block; }
+        .item-link { font-size: 18px; font-weight: 600; color: #fff; text-decoration: none; display: block; margin-bottom: 8px; word-break: break-all; }
+        .item-long { font-size: 10px; color: #94a3b8; word-break: break-all; opacity: 0.7; }
 
-        /* Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .action-row { display: flex; gap: 8px; margin-top: 15px; align-items: center; }
+        .btn-copy-lg { flex: 2; padding: 12px; background: var(--primary); color: #000; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; }
+        .small-btn { flex: 0.5; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; padding: 8px; font-size: 12px; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 3000; }
         .modal { background: #1e293b; padding: 30px; border-radius: 25px; border: 1px solid var(--primary); text-align: center; width: 90%; max-width: 380px; }
-
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div style="font-size: 18px; font-weight: 600;">PRO Linker 🚀</div>
-        <div class="config-btn" onclick="toggleSidebar()">⚙️</div>
+        <div style="font-weight: 600; font-size: 18px;">BITLY PRO ELITE 🚀</div>
+        <div class="config-toggle" onclick="toggleSidebar()">⚙️</div>
     </div>
 
     <div class="main-card">
-        <h1>BITLY DASHBOARD</h1>
+        <h1>Dashboard</h1>
         <div class="input-group">
-            <label>Destination URL</label>
-            <input type="url" id="longUrl" placeholder="https://example.com">
+            <label>🌐 Destination URL</label>
+            <input type="url" id="longUrl" placeholder="https://google.com">
         </div>
         <div class="input-group">
-            <label>Custom ID (Optional)</label>
-            <input type="text" id="customId" placeholder="e.g. my-link">
+            <label>🆔 Custom ID</label>
+            <input type="text" id="customId" placeholder="e.g. my-cool-link" oninput="resetIdCheck()">
+            <span id="checkMsg" class="status-msg"></span>
         </div>
+        
         <div class="btn-row">
-            <button class="btn-primary" onclick="shorten('custom')">✨ Custom</button>
-            <button class="btn-random" onclick="shorten('random')">🎲 Random</button>
+            <button class="btn-check" onclick="checkIdAvailability()">🔍 Check ID</button>
+            <button class="btn-custom" onclick="processShorten('custom')" id="btnCustom">✨ Custom</button>
+            <button class="btn-random" onclick="processShorten('random')" id="btnRandom">🎲 Random</button>
         </div>
-        <div class="btn-row">
-            <button class="btn-outline" onclick="askExport()">💾 Backup</button>
-            <button class="btn-outline" onclick="document.getElementById('importFile').click()">📂 Restore</button>
+
+        <div class="btn-row" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+            <button class="btn-backup" onclick="askExport()">💾 Backup</button>
+            <button class="btn-backup" onclick="document.getElementById('importFile').click()">📂 Restore</button>
         </div>
         <input type="file" id="importFile" style="display:none" onchange="importData(event)">
     </div>
 
-    <div class="history-box" id="historyBox"></div>
+    <div class="history-box" id="historyList"></div>
 
-    <!-- Slide Configuration Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div style="font-size: 20px; font-weight: 600;">⚙️ Configuration</div>
             <div onclick="toggleSidebar()" style="cursor:pointer">✖️</div>
         </div>
-
-        <div class="config-section">
-            <div class="section-title">
-                <span>API KEYS</span>
-                <div class="add-btn" onclick="addNewToken()">+ ADD</div>
-            </div>
-            <div id="tokenContainer">
-                <!-- Token Cards will appear here -->
-            </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+            <span style="font-size:12px; color:#94a3b8;">API TOKENS</span>
+            <button onclick="addNewToken()" style="background:#06b6d4; padding:5px 10px; border-radius:6px; font-size:10px; color:#000;">+ ADD</button>
         </div>
-
-        <div class="config-section">
-            <div class="section-title">
-                <span>PROJECT INFO</span>
-            </div>
-            <p style="font-size: 12px; color: #94a3b8;">Manage your Bitly tokens here. The token with the checkmark ✅ will be used for shortening.</p>
-        </div>
-
-        <button class="btn-primary" style="width:100%; margin-top: 20px;" onclick="saveConfig()">Save & Reload</button>
-        <button class="btn-outline" style="width:100%; margin-top: 10px; border-color: var(--danger); color: var(--danger);" onclick="resetDefault()">Reset Default</button>
+        <div id="tokenContainer"></div>
+        <button class="btn-custom" style="width:100%; margin-top:20px;" onclick="saveConfig()">Save & Reload 💾</button>
+        <button class="btn-backup" style="width:100%; margin-top:10px; color:var(--danger); border-color:var(--danger);" onclick="resetAllConfig()">Reset All ⚠️</button>
     </div>
 
-    <!-- Universal Confirmation Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
-            <h3 id="mTitle" style="color:var(--primary);">Confirm Action</h3>
+            <h3 id="mTitle" style="color:var(--primary);">Confirm</h3>
             <p id="mDesc" style="color:#94a3b8; font-size:13px; margin-bottom:20px;"></p>
             <div style="display:flex; gap:10px;">
-                <button class="btn-primary" style="flex:1" id="mConfirm">Confirm ✅</button>
-                <button class="btn-outline" style="flex:1" onclick="closeModal()">Cancel ❌</button>
+                <button class="btn-custom" style="flex:1" id="mConfirm">Yes ✅</button>
+                <button class="btn-backup" style="flex:1" onclick="closeModal()">No ❌</button>
             </div>
         </div>
     </div>
 
     <script>
-        let config = JSON.parse(localStorage.getItem('bitlyConfig')) || {
-            tokens: [{id: Date.now(), key: "894ab7a943b13ae327edabd34aef3ba89661c6b8", active: true}]
+        let config = JSON.parse(localStorage.getItem('bitlyProConfig')) || {
+            tokens: [{id: 1, key: "894ab7a943b13ae327edabd34aef3ba89661c6b8", active: true}]
         };
+        let isIdChecked = false;
+        let groupGuid = "";
+        let editId = null;
 
-        window.onload = () => {
-            loadHistory();
-            renderTokenList();
-        };
+        window.onload = () => { loadHistory(); renderTokens(); fetchGroupGuid(); };
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
 
-        // --- Sidebar Logic ---
-        function renderTokenList() {
+        function renderTokens() {
             const container = document.getElementById('tokenContainer');
             container.innerHTML = "";
             config.tokens.forEach(t => {
                 container.innerHTML += `
-                    <div class="item-row">
-                        <div class="key-input-container">
-                            <input type="text" value="${t.key}" onchange="updateToken(${t.id}, this.value)" style="font-size: 12px;">
-                            <span class="active-check" onclick="setActiveToken(${t.id})">${t.active ? '✅' : '⚪'}</span>
-                            <span class="remove-btn" onclick="removeToken(${t.id})">➖</span>
+                    <div class="token-card">
+                        <div class="token-row">
+                            <input type="text" value="${t.key}" onchange="updateToken(${t.id}, this.value)">
+                            <span onclick="setActiveToken(${t.id})" style="cursor:pointer">${t.active ? '✅' : '⚪'}</span>
+                            <span onclick="removeToken(${t.id})" style="color:var(--danger); cursor:pointer;">🗑️</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function addNewToken() { config.tokens.push({id: Date.now(), key: "", active: false}); renderTokens(); }
+        function updateToken(id, val) { const t = config.tokens.find(x => x.id === id); if(t) t.key = val; }
+        function setActiveToken(id) { config.tokens.forEach(t => t.active = (t.id === id)); renderTokens(); }
+        function removeToken(id) { if(config.tokens.length === 1) return; config.tokens = config.tokens.filter(x => x.id !== id); renderTokens(); }
+        function saveConfig() { localStorage.setItem('bitlyProConfig', JSON.stringify(config)); location.reload(); }
+        function resetAllConfig() { if(confirm("Clear all?")) { localStorage.clear(); location.reload(); } }
+
+        async function fetchGroupGuid() {
+            const token = config.tokens.find(t => t.active)?.key;
+            if(!token) return;
+            try {
+                const r = await fetch('https://api-ssl.bitly.com/v4/groups', { headers: { 'Authorization': `Bearer ${token}` } });
+                const d = await r.json(); groupGuid = d.groups[0].guid;
+            } catch(e) { console.error("GUID Fetch Fail"); }
+        }
+
+        async function checkIdAvailability() {
+            const cid = document.getElementById('customId').value.trim();
+            const msg = document.getElementById('checkMsg');
+            const token = config.tokens.find(t => t.active)?.key;
+            if(!cid) return alert("Enter ID!");
+            msg.innerText = "Checking...";
+            try {
+                const r = await fetch(`https://api-ssl.bitly.com/v4/bitlinks/bit.ly/${cid}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (r.status === 404) {
+                    msg.innerText = "✓ Available!"; msg.style.color = "var(--success)";
+                    isIdChecked = true;
+                } else {
+                    msg.innerText = "✗ Taken!"; msg.style.color = "var(--danger)";
+                    isIdChecked = false;
+                }
+            } catch (e) { msg.innerText = "Error"; }
+        }
+        function resetIdCheck() { document.getElementById('checkMsg').innerText = ""; isIdChecked = false; }
+
+        async function processShorten(type) {
+            const token = config.tokens.find(t => t.active)?.key;
+            const longUrl = document.getElementById('longUrl').value.trim();
+            const cid = document.getElementById('customId').value.trim();
+            
+            if(!longUrl) return alert("URL required!");
+            if(type === 'custom' && (!cid || !isIdChecked)) return alert("Check ID availability!");
+
+            const btn = document.getElementById(type === 'custom' ? 'btnCustom' : 'btnRandom');
+            btn.innerText = "..."; btn.disabled = true;
+
+            const urlData = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
+            
+            // STRICT LOGIC: 
+            // RANDOM uses /shorten (Standard Hash)
+            // CUSTOM uses /bitlinks (Strict Backhalf)
+            const endpoint = (type === 'custom') ? 'https://api-ssl.bitly.com/v4/bitlinks' : 'https://api-ssl.bitly.com/v4/shorten';
+            const payload = { long_url: urlData, domain: "bit.ly" };
+            if(type === 'custom') { payload.backhalf = cid; payload.group_guid = groupGuid; }
+
+            try {
+                const r = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const d = await r.json();
+
+                // Validation for Custom: If Bitly ignores the backhalf and gives a random link
+                if(type === 'custom' && d.link && !d.link.toLowerCase().includes(cid.toLowerCase())) {
+                    alert("STRICT ERROR: Custom ID failed! Bitly generated a random link instead. This might be due to monthly limits.");
+                } else if(d.link) {
+                    if(editId) deleteFromHistory(editId, true);
+                    saveToHistory(cid || d.id.split('/')[1], d.link, urlData);
+                    loadHistory(); clearInputs(); alert("Success! 🚀");
+                } else {
+                    alert("Error: " + (d.description || "API Limit reached."));
+                }
+            } catch (e) { alert("Server Error!"); }
+            finally { 
+                document.getElementById('btnCustom').innerText = "✨ Custom";
+                document.getElementById('btnRandom').innerText = "🎲 Random";
+                btn.disabled = false; 
+            }
+        }
+
+        function saveToHistory(name, short, long) {
+            let h = JSON.parse(localStorage.getItem('bitlyHistoryV3')) || [];
+            h.unshift({name, short, long, id: Date.now()});
+            localStorage.setItem('bitlyHistoryV3', JSON.stringify(h));
+        }
+
+        function loadHistory() {
+            const list = document.getElementById('historyList');
+            const h = JSON.parse(localStorage.getItem('bitlyHistoryV3')) || [];
+            list.innerHTML = h.length ? "" : "<p style='text-align:center; opacity:0.5;'>No links.</p>";
+            h.forEach(item => {
+                list.innerHTML += `
+                    <div class="item-card">
+                        <span class="item-label">🏷️ ${item.name}</span>
+                        <a href="javascript:void(0)" class="item-link" onclick="askOpen('${item.long}')">${item.short}</a>
+                        <div class="item-long">${item.long}</div>
+                        <div class="action-row">
+                            <button class="btn-copy-lg" onclick="copy('${item.short}')">📋 COPY LINK</button>
+                            <button class="small-btn" onclick="startEdit(${item.id})" style="color:var(--warning)">📝</button>
+                            <button class="small-btn" onclick="askDelete(${item.id})" style="color:var(--danger)">🗑️</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function addNewToken() {
-            config.tokens.push({id: Date.now(), key: "", active: false});
-            renderTokenList();
+        function startEdit(id) {
+            const h = JSON.parse(localStorage.getItem('bitlyHistoryV3')) || [];
+            const item = h.find(x => x.id === id);
+            document.getElementById('longUrl').value = item.long;
+            document.getElementById('customId').value = item.name;
+            editId = id; isIdChecked = true;
+            document.getElementById('btnCustom').innerText = "Update ✨";
+            window.scrollTo({top:0, behavior:'smooth'});
         }
 
-        function updateToken(id, val) {
-            const t = config.tokens.find(x => x.id === id);
-            if(t) t.key = val;
+        function deleteFromHistory(id, silent = false) {
+            let h = JSON.parse(localStorage.getItem('bitlyHistoryV3')) || [];
+            h = h.filter(x => x.id !== id);
+            localStorage.setItem('bitlyHistoryV3', JSON.stringify(h));
+            if(!silent) loadHistory();
         }
 
-        function setActiveToken(id) {
-            config.tokens.forEach(t => t.active = (t.id === id));
-            renderTokenList();
-        }
-
-        function removeToken(id) {
-            if(config.tokens.length === 1) return alert("At least one token is required!");
-            config.tokens = config.tokens.filter(t => t.id !== id);
-            renderTokenList();
-        }
-
-        function saveConfig() {
-            localStorage.setItem('bitlyConfig', JSON.stringify(config));
-            alert("Configuration Saved! 🚀");
-            toggleSidebar();
-        }
-
-        function resetDefault() {
-            if(confirm("Reset all configurations to default?")) {
-                localStorage.removeItem('bitlyConfig');
-                location.reload();
-            }
-        }
-
-        // --- Core Shortener Logic ---
-        async function shorten(type) {
-            const activeToken = config.tokens.find(t => t.active)?.key;
-            if(!activeToken || activeToken === "") return alert("Please add and activate an API Key in settings!");
-
-            const longUrl = document.getElementById('longUrl').value.trim();
-            const customId = document.getElementById('customId').value.trim();
-            if(!longUrl) return alert("Enter URL!");
-
-            const body = { long_url: longUrl.startsWith('http') ? longUrl : 'https://' + longUrl };
-            if(type === 'custom' && customId) body.backhalf = customId;
-
-            try {
-                const response = await fetch('https://api-ssl.bitly.com/v4/shorten', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${activeToken}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
-                const data = await response.json();
-
-                if(data.link) {
-                    saveToHistory(customId || data.id.split('/')[1], data.link, body.long_url);
-                    loadHistory();
-                    alert("Link Shortened! 🔗");
-                } else {
-                    alert("Error: " + (data.description || "Limit reached or ID taken."));
-                }
-            } catch (e) { alert("Network Error!"); }
-        }
-
-        function saveToHistory(name, short, long) {
-            let history = JSON.parse(localStorage.getItem('bitlyHistory')) || [];
-            history.unshift({name, short, long, id: Date.now()});
-            localStorage.setItem('bitlyHistory', JSON.stringify(history));
-        }
-
-        function loadHistory() {
-            const box = document.getElementById('historyBox');
-            const history = JSON.parse(localStorage.getItem('bitlyHistory')) || [];
-            box.innerHTML = history.length ? "" : "<p style='text-align:center; opacity:0.5;'>No links generated.</p>";
-            history.forEach(item => {
-                box.innerHTML += `
-                    <div class="item-card">
-                        <div style="font-size:11px; color:var(--primary);">🏷️ ${item.name}</div>
-                        <div style="font-size:18px; font-weight:600; margin:5px 0; color:#fff;">${item.short}</div>
-                        <div style="font-size:10px; color:#94a3b8; word-break:break-all;">${item.long}</div>
-                        <button class="copy-btn-lg" onclick="copy('${item.short}')">📋 COPY LINK</button>
-                    </div>
-                `;
-            });
-        }
-
-        // --- Backup Logic with Modal ---
-        function askExport() {
-            openModal("Export Backup?", "Do you want to download your link history as a JSON file?", () => {
-                const history = localStorage.getItem('bitlyHistory');
-                if(!history) return alert("No history to backup!");
-                const blob = new Blob([history], {type: "application/json"});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url; a.download = `backup_${Date.now()}.json`; a.click();
-                closeModal();
-            });
-        }
-
+        function askOpen(url) { openModal("Open Link", "Visit destination?", () => { window.open(url, '_blank'); closeModal(); }); }
+        function askDelete(id) { openModal("Delete Link", "Remove from history?", () => { deleteFromHistory(id); closeModal(); }); }
+        function askExport() { openModal("Export", "Download Backup?", () => {
+            const d = localStorage.getItem('bitlyHistoryV3');
+            const b = new Blob([d], {type: "application/json"});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `backup.json`; a.click();
+            closeModal();
+        }); }
         function importData(e) {
-            const file = e.target.files[0];
             const reader = new FileReader();
-            reader.onload = (ev) => {
-                localStorage.setItem('bitlyHistory', ev.target.result);
-                loadHistory(); alert("Backup Restored! 📂");
-            };
-            reader.readAsText(file);
+            reader.onload = (ev) => { localStorage.setItem('bitlyHistoryV3', ev.target.result); loadHistory(); alert("Restored!"); };
+            reader.readAsText(e.target.files[0]);
         }
-
-        // --- Modals & Utils ---
         function openModal(t, d, cfm) {
-            document.getElementById('mTitle').innerText = t;
-            document.getElementById('mDesc').innerText = d;
-            document.getElementById('modalOverlay').style.display = 'flex';
-            document.getElementById('mConfirm').onclick = cfm;
+            document.getElementById('mTitle').innerText = t; document.getElementById('mDesc').innerText = d;
+            document.getElementById('modalOverlay').style.display = 'flex'; document.getElementById('mConfirm').onclick = cfm;
         }
         function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-        function copy(t) { navigator.clipboard.writeText(t); alert("Link Copied! 📋"); }
+        function copy(t) { navigator.clipboard.writeText(t); alert("Copied! 📋"); }
+        function clearInputs() {
+            document.getElementById('longUrl').value = ""; document.getElementById('customId').value = "";
+            document.getElementById('btnCustom').innerText = "✨ Custom"; editId = null; resetIdCheck();
+        }
     </script>
 </body>
 </html>
