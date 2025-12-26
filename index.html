@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>এলিট লিংক ম্যানেজার</title>
+    <title>প্রিমিয়াম লিংক ড্যাশবোর্ড</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,7 +12,8 @@
             --secondary: #4facfe;
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --danger: #ff4d4d;
+            --danger: #ff4b5c;
+            --success: #00e676;
         }
 
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -19,9 +21,9 @@
         body {
             margin: 0; padding: 20px; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(-45deg, #12c2e9, #c471ed, #f64f59, #23d5ab);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
-            animation: gradientAnim 12s ease infinite;
+            animation: gradientAnim 15s ease infinite;
             color: #fff; overflow-x: hidden;
         }
 
@@ -31,74 +33,77 @@
             100% { background-position: 0% 50%; }
         }
 
-        .main-card {
+        /* Glass Container */
+        .glass-card {
             background: var(--glass);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 30px; width: 100%; max-width: 500px;
+            border-radius: 30px;
+            padding: 35px; width: 100%; max-width: 500px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             text-align: center; margin-bottom: 30px;
-            animation: bounceIn 1s ease-out;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { font-size: 24px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; color: #fff; }
+        h1 { font-size: 24px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
 
-        .input-box { margin-bottom: 15px; width: 100%; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { font-size: 12px; margin-left: 5px; color: #eee; }
         input {
-            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border); border-radius: 12px;
-            color: white; font-size: 15px; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--glass-border); border-radius: 14px;
+            color: white; font-size: 15px; outline: none; margin-top: 5px;
         }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 242, 254, 0.4); }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
 
-        .btn-flex { display: flex; gap: 10px; }
+        .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
         button {
-            flex: 1; padding: 14px; border: none; border-radius: 12px;
+            flex: 1; padding: 14px; border: none; border-radius: 14px;
             font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .btn-main { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3); }
-        .btn-reset { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid var(--glass-border); flex: 0.4; }
+        .btn-generate { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
+        .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4); }
+        .btn-reset { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--glass-border); flex: 0.4; }
 
-        /* List Section */
+        /* History List */
         .history-section { width: 100%; max-width: 600px; }
         .history-card {
             background: var(--glass); backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 18px;
+            border: 1px solid var(--glass-border); border-radius: 20px;
             padding: 20px; margin-bottom: 15px;
-            display: flex; flex-direction: column; gap: 12px;
+            display: flex; flex-direction: column; gap: 10px;
             animation: slideIn 0.5s ease;
         }
 
-        @keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 
-        .short-url-view { font-size: 18px; color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
-        .badge { background: rgba(0,0,0,0.3); padding: 3px 10px; border-radius: 20px; font-size: 11px; color: #cbd5e1; }
+        .short-url { font-size: 19px; color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
+        .original-url { font-size: 11px; color: #cbd5e1; word-break: break-all; }
 
-        .action-btns { display: flex; gap: 8px; justify-content: flex-end; }
-        .action-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+        .action-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 5px; }
+        .action-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border); padding: 7px 15px; border-radius: 10px; font-size: 12px; cursor: pointer; }
         .action-btn:hover { background: rgba(255,255,255,0.2); }
-        .del-btn:hover { background: rgba(255, 77, 77, 0.3); border-color: var(--danger); }
+        .btn-edit { color: #fbbf24; border-color: #fbbf24; }
+        .btn-del { color: var(--danger); border-color: var(--danger); }
 
-        /* Modal Look */
-        .overlay {
+        /* Custom Modal (For Delete & Confirmation) */
+        .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-            display: none; justify-content: center; align-items: center; z-index: 1000;
+            display: none; justify-content: center; align-items: center; z-index: 9999;
         }
-        .modal { background: #1e293b; border: 1px solid var(--primary); border-radius: 25px; padding: 35px; width: 90%; max-width: 400px; text-align: center; }
-        .modal h3 { margin-top: 0; color: var(--primary); }
-        .modal p { font-size: 14px; color: #94a3b8; }
+        .modal {
+            background: #1e293b; border: 1px solid var(--primary);
+            border-radius: 25px; padding: 30px; width: 90%; max-width: 400px; text-align: center;
+        }
+        .modal h3 { color: var(--primary); margin-top: 0; }
+        .modal p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
         .modal-btns { display: flex; gap: 10px; margin-top: 25px; }
-        
+
+        /* Mobile Friendly */
         @media (max-width: 500px) {
             .btn-flex { flex-direction: column; }
             .btn-reset { flex: 1; }
@@ -107,158 +112,170 @@
 </head>
 <body>
 
-    <div class="main-card">
-        <h1>PREMIUM LINKER</h1>
-        <div class="input-box">
-            <input type="url" id="longUrl" placeholder="আপনার বড় লিংকটি দিন...">
+    <div class="glass-card">
+        <h1>LINK MANAGER</h1>
+        <div class="input-group">
+            <label>আসল লিংক (URL)</label>
+            <input type="url" id="longUrl" placeholder="https://example.com/...">
         </div>
-        <div class="input-box">
-            <input type="text" id="linkName" placeholder="লিংকের একটি নাম দিন (যেমন: My Folder)">
+        <div class="input-group">
+            <label>পছন্দমতো আইডি (ID / Alias)</label>
+            <input type="text" id="customAlias" placeholder="যেমন: mylink123">
         </div>
         <div class="btn-flex">
-            <button class="btn-main" onclick="processShorten()" id="mainBtn">তৈরি করুন</button>
-            <button class="btn-reset" onclick="resetForm()">রিসেট</button>
+            <button class="btn-generate" onclick="handleGenerate()" id="btnText">তৈরি করুন</button>
+            <button class="btn-reset" onclick="clearForm()">রিসেট</button>
         </div>
     </div>
 
-    <div class="history-section" id="listBody">
-        <!-- লিংক লিস্ট এখানে আসবে -->
+    <div class="history-section" id="linkList">
+        <!-- লিস্ট এখানে আসবে -->
     </div>
 
-    <!-- Confirm Modal -->
-    <div class="overlay" id="confirmModal">
+    <!-- Multi-purpose Modal -->
+    <div class="modal-overlay" id="customModal">
         <div class="modal">
-            <h3 id="modalTitle">লিংক ভিউয়ার</h3>
-            <p id="modalDesc">আপনি কি এই লিংকে যেতে নিশ্চিত?</p>
-            <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; font-size:12px; color:#fff; word-break:break-all;" id="modalUrl"></div>
+            <h3 id="mTitle">নিশ্চিত করুন</h3>
+            <p id="mDesc">আপনি কি এটি করতে চান?</p>
+            <div id="mLinkView" style="font-size: 12px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin: 15px 0; display: none; word-break: break-all;"></div>
             <div class="modal-btns">
-                <button class="btn-main" id="confirmBtn">হ্যাঁ</button>
+                <button class="btn-generate" id="mConfirm">হ্যাঁ</button>
                 <button class="btn-reset" onclick="closeModal()">না</button>
             </div>
         </div>
     </div>
 
     <script>
-        window.onload = loadLinks;
+        let currentEditId = null;
 
-        async function processShorten() {
-            let url = document.getElementById('longUrl').value.trim();
-            let label = document.getElementById('linkName').value.trim() || "Untitled";
-            const btn = document.getElementById('mainBtn');
+        window.onload = loadData;
 
-            if (!url) return alert("লিংক দিন!");
-            if (!url.startsWith('http')) url = 'https://' + url;
+        async function handleGenerate() {
+            let long = document.getElementById('longUrl').value.trim();
+            let alias = document.getElementById('customAlias').value.trim();
+            const btn = document.getElementById('btnText');
 
-            btn.innerText = "লোডিং...";
+            if (!long) return alert("দয়া করে একটি লিংক দিন!");
+            if (!long.startsWith('http')) long = 'https://' + long;
+
+            btn.innerText = "প্রসেসিং...";
             btn.disabled = true;
 
             try {
-                // TinyURL with Proxy for high stability
+                // v.gd API ব্যবহার করা হচ্ছে যা আইডি সাপোর্ট করে
                 const proxy = "https://api.allorigins.win/get?url=";
-                const api = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`;
-                
-                const response = await fetch(proxy + encodeURIComponent(api));
-                const data = await response.json();
-                const shortLink = data.contents;
+                let apiUrl = `https://v.gd/create.php?format=json&url=${encodeURIComponent(long)}`;
+                if(alias) apiUrl += `&shorturl=${encodeURIComponent(alias)}`;
 
-                if (shortLink && shortLink.includes("tinyurl.com")) {
-                    saveLink(label, shortLink, url);
-                    resetForm();
-                    loadLinks();
+                const resp = await fetch(proxy + encodeURIComponent(apiUrl));
+                const data = await resp.json();
+                const result = JSON.parse(data.contents);
+
+                if (result.shorturl) {
+                    // যদি আমরা এডিট মোডে থাকি, তবে আগেরটা ডিলিট করব
+                    if(currentEditId) {
+                        deleteFromLocal(currentEditId, true);
+                        currentEditId = null;
+                    }
+                    saveToLocal(alias || "Auto", result.shorturl, long);
+                    clearForm();
+                    loadData();
                 } else {
-                    alert("লিংক তৈরি ব্যর্থ। আবার চেষ্টা করুন।");
+                    alert("ভুল: " + (result.errormessage || "এই আইডিটি ইতিমধ্যে অন্য কেউ ব্যবহার করছে।"));
                 }
-            } catch (err) {
-                alert("সার্ভার সমস্যা! ইন্টারনেট চেক করুন।");
+            } catch (e) {
+                alert("সার্ভার সমস্যা! ইন্টারনেট কানেকশন চেক করুন।");
             } finally {
                 btn.innerText = "তৈরি করুন";
                 btn.disabled = false;
             }
         }
 
-        function saveLink(name, short, long) {
-            let list = JSON.parse(localStorage.getItem('myPremiumLinks') || "[]");
-            list.unshift({ name, short, long, id: Date.now() });
-            localStorage.setItem('myPremiumLinks', JSON.stringify(list));
+        function saveToLocal(name, short, long) {
+            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            db.unshift({ name, short, long, id: Date.now() });
+            localStorage.setItem('premiumLinksDB', JSON.stringify(db));
         }
 
-        function loadLinks() {
-            const container = document.getElementById('listBody');
-            let list = JSON.parse(localStorage.getItem('myPremiumLinks') || "[]");
-            container.innerHTML = list.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো ডাটা নেই</p>";
+        function loadData() {
+            const container = document.getElementById('linkList');
+            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            container.innerHTML = db.length ? "" : "<p style='text-align:center; opacity:0.5;'>কোনো লিংক তৈরি করা হয়নি</p>";
 
-            list.forEach(item => {
+            db.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "history-card";
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="badge">${item.name}</span>
-                        <a href="javascript:void(0)" class="short-url-view" onclick="askPermission('${item.long}')">${item.short}</a>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="flex:1">
+                            <a href="javascript:void(0)" class="short-url" onclick="askToOpen('${item.long}')">${item.short}</a>
+                            <div class="original-url">ID: ${item.name} | Dest: ${item.long}</div>
+                        </div>
                     </div>
-                    <div class="action-btns">
+                    <div class="action-row">
                         <button class="action-btn" onclick="copy('${item.short}')">কপি</button>
-                        <button class="action-btn" onclick="editItem(${item.id})">রিনেম</button>
-                        <button class="action-btn del-btn" onclick="askDelete(${item.id})">মুছুন</button>
+                        <button class="action-btn btn-edit" onclick="startEdit(${item.id})">এডিট</button>
+                        <button class="action-btn btn-del" onclick="askToDelete(${item.id})">মুছুন</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function askPermission(url) {
-            showModal("লিংক ভিউয়ার", "আপনি কি এই লিংকে যেতে নিশ্চিত?", url, () => {
+        function askToOpen(url) {
+            openModal("লিংক ওপেন করুন", "আপনি কি এই গন্তব্যে যেতে চান?", url, () => {
                 window.open(url, '_blank');
                 closeModal();
             });
         }
 
-        function askDelete(id) {
-            showModal("মুছে ফেলবেন?", "আপনি কি নিশ্চিতভাবে এই লিংকটি হিস্টোরি থেকে মুছতে চান?", "", () => {
-                let list = JSON.parse(localStorage.getItem('myPremiumLinks') || "[]");
-                list = list.filter(l => l.id !== id);
-                localStorage.setItem('myPremiumLinks', JSON.stringify(list));
-                loadLinks();
+        function askToDelete(id) {
+            openModal("মুছে ফেলবেন?", "আপনি কি নিশ্চিতভাবে এই লিংকটি তালিকা থেকে মুছতে চান?", "", () => {
+                deleteFromLocal(id);
                 closeModal();
             });
         }
 
-        function showModal(title, desc, urlText, onConfirm) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalUrl').innerText = urlText;
-            document.getElementById('modalUrl').style.display = urlText ? "block" : "none";
-            document.getElementById('confirmModal').style.display = 'flex';
-            document.getElementById('confirmBtn').onclick = onConfirm;
+        function startEdit(id) {
+            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            let item = db.find(x => x.id === id);
+            document.getElementById('longUrl').value = item.long;
+            document.getElementById('customAlias').value = item.name === "Auto" ? "" : item.name;
+            currentEditId = id;
+            document.getElementById('btnText').innerText = "আপডেট করুন";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function closeModal() { document.getElementById('confirmModal').style.display = 'none'; }
+        function deleteFromLocal(id, silent = false) {
+            let db = JSON.parse(localStorage.getItem('premiumLinksDB') || "[]");
+            db = db.filter(x => x.id !== id);
+            localStorage.setItem('premiumLinksDB', JSON.stringify(db));
+            if(!silent) loadData();
+        }
 
-        function copy(text) {
-            navigator.clipboard.writeText(text);
+        function openModal(title, desc, link, onConfirm) {
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mDesc').innerText = desc;
+            const linkView = document.getElementById('mLinkView');
+            if(link) { linkView.innerText = link; linkView.style.display = "block"; }
+            else { linkView.style.display = "none"; }
+            
+            document.getElementById('customModal').style.display = 'flex';
+            document.getElementById('mConfirm').onclick = onConfirm;
+        }
+
+        function closeModal() { document.getElementById('customModal').style.display = 'none'; }
+
+        function copy(txt) {
+            navigator.clipboard.writeText(txt);
             alert("কপি হয়েছে!");
         }
 
-        function editItem(id) {
-            let list = JSON.parse(localStorage.getItem('myPremiumLinks') || "[]");
-            let item = list.find(l => l.id === id);
-            let newName = prompt("লিংকের নতুন নাম দিন:", item.name);
-            if (newName) {
-                item.name = newName;
-                localStorage.setItem('myPremiumLinks', JSON.stringify(list));
-                loadLinks();
-            }
-        }
-
-        function deleteItem(id) {
-            let list = JSON.parse(localStorage.getItem('myPremiumLinks') || "[]");
-            list = list.filter(l => l.id !== id);
-            localStorage.setItem('myPremiumLinks', JSON.stringify(list));
-            loadLinks();
-        }
-
-        function resetForm() {
+        function clearForm() {
             document.getElementById('longUrl').value = "";
-            document.getElementById('linkName').value = "";
+            document.getElementById('customAlias').value = "";
+            document.getElementById('btnText').innerText = "তৈরি করুন";
+            currentEditId = null;
         }
     </script>
 </body>
