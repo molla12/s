@@ -3,307 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitly Pro - Cloud Master 🔗</title>
+    <title>Bitly Pro - Ultimate Cloud Dashboard 🔐🔗</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00f2fe; --secondary: #4facfe; --danger: #ff4b5c; 
-            --success: #00e676; --warning: #fbbf24; --text: #f8fafc;
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --bg: #0f172a; --card-bg: rgba(30, 41, 59, 0.7); --primary: #00f2fe;
+            --secondary: #4facfe; --danger: #ff4b5c; --success: #00e676;
+            --warning: #fbbf24; --glass-border: rgba(255, 255, 255, 0.1);
         }
-
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; transition: 0.3s; }
-
-        body {
-            margin: 0; padding: 20px; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(-45deg, #0f172a, #7c3aed, #f43f5e, #12c2e9);
-            background-size: 400% 400%; animation: gradientAnim 15s ease infinite;
-            color: #fff; overflow-x: hidden;
-        }
-
+        body { margin: 0; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: linear-gradient(-45deg, #0f172a, #7c3aed, #f43f5e, #12c2e9); background-size: 400% 400%; animation: gradientAnim 15s ease infinite; color: #fff; overflow-x: hidden; }
         @keyframes gradientAnim { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         /* Login Screen */
-        #loginScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(25px);
-            display: flex; justify-content: center; align-items: center; z-index: 9000;
-        }
-        .login-card {
-            background: rgba(30, 41, 59, 0.7); border: 1px solid var(--glass-border);
-            padding: 40px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center;
-        }
+        #loginScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(25px); display: flex; justify-content: center; align-items: center; z-index: 9000; }
+        .login-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 40px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; }
 
-        /* Dashboard (Hidden initially) */
+        /* Dashboard */
         #mainApp { display: none; width: 100%; max-width: 500px; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .header { display: flex; justify-content: space-between; width: 100%; margin-bottom: 20px; align-items: center; }
         .config-toggle { background: var(--glass-border); padding: 10px; border-radius: 12px; cursor: pointer; font-size: 18px; }
 
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); border-radius: 30px; padding: 30px;
-            border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            text-align: center; margin-bottom: 25px;
-        }
+        .main-card { background: var(--card-bg); backdrop-filter: blur(25px); border-radius: 30px; padding: 30px; border: 1px solid var(--glass-border); text-align: center; margin-bottom: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+        h1 { font-size: 22px; margin-bottom: 25px; text-transform: uppercase; color: var(--primary); letter-spacing: 2px; }
 
-        h1 { font-size: 22px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); }
-
-        .form-group { text-align: left; margin-bottom: 15px; }
-        label { font-size: 11px; color: #cbd5e1; margin-left: 5px; }
-        input {
-            width: 100%; padding: 14px; margin-top: 5px;
-            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
-            border-radius: 12px; color: white; font-size: 14px; outline: none;
-        }
+        input { width: 100%; padding: 14px; margin-top: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border); border-radius: 12px; color: white; outline: none; }
         input:focus { border-color: var(--primary); }
+        .status-msg { font-size: 10px; margin-top: 5px; font-weight: bold; display: block; height: 15px; }
 
         .btn-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-        button { padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        
-        .btn-main { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; flex: 1.5; }
+        button { padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; }
         .btn-check { background: var(--warning); color: #000; flex: 1; font-size: 12px; }
+        .btn-custom { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; flex: 1.5; }
         .btn-random { background: #fff; color: #000; flex: 1; }
+        .btn-backup { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--glass-border); flex: 1; font-size: 11px; }
 
         /* Sidebar */
-        .sidebar {
-            position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100%;
-            background: #111827; z-index: 6000; padding: 30px;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.8); overflow-y: auto;
-        }
+        .sidebar { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100%; background: #111827; z-index: 6000; padding: 30px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); overflow-y: auto; }
         .sidebar.active { right: 0; }
-        .token-item { background: #1f2937; padding: 15px; border-radius: 15px; border: 1px solid #374151; margin-bottom: 12px; display: flex; gap: 10px; align-items: center; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #374151; padding-bottom: 15px; margin-bottom: 25px; }
+        .token-card { background: #1f2937; padding: 15px; border-radius: 15px; border: 1px solid #374151; margin-bottom: 12px; }
 
-        /* History Items */
-        .history-item { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); }
-        .copy-btn-lg { width: 100%; background: var(--primary); color: #000; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 18px; margin-top: 15px; }
+        /* History */
+        .history-box { width: 100%; margin-top: 25px; }
+        .item-card { background: var(--card-bg); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); }
+        .btn-copy-lg { padding: 15px; background: var(--primary); color: #000; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; width: 100%; margin-top: 10px; }
 
-        /* Modal Overlay */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .modal { background: #1e293b; border: 1px solid var(--primary); border-radius: 25px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
+        /* Modal */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .modal { background: #1e293b; border: 1px solid var(--primary); border-radius: 25px; padding: 30px; width: 90%; max-width: 380px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN SECTION -->
+    <!-- 🔐 LOGIN SCREEN -->
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--primary)">🔐 CLOUD LOGIN</h1>
-            <p style="font-size: 12px; color:#94a3b8">Global Sync Enabled. Unlock to view Data.</p>
-            <input type="password" id="passInput" placeholder="Enter Global Password">
-            <button class="btn-main" style="width:100%; margin-top: 20px;" onclick="handleLogin()">UNLOCK 🚀</button>
+            <h1 style="color: var(--primary);">🔐 CLOUD ACCESS</h1>
+            <p style="font-size: 12px; color: #94a3b8;">Syncing all devices. Enter Password.</p>
+            <input type="password" id="pPass" placeholder="Enter Global Password">
+            <button class="btn-custom" style="width:100%; margin-top: 20px;" onclick="checkCloudLogin()">LOGIN 🚀</button>
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
+    <!-- 📊 MAIN DASHBOARD -->
     <div id="mainApp">
         <div class="header">
-            <div style="font-weight: 600; font-size: 18px;">PRO LINKER CLOUD 🌍</div>
-            <div class="config-toggle" onclick="toggleSidebar()">⚙️ Config</div>
+            <div style="font-weight: 600;">BITLY PRO CLOUD 🌍</div>
+            <div class="config-toggle" onclick="toggleSidebar()">⚙️ Settings</div>
         </div>
 
         <div class="glass-card">
-            <h1>Create Short Link</h1>
-            <div class="form-group">
-                <input type="url" id="longUrl" placeholder="https://destination-url.com">
-            </div>
-            <div class="form-group">
-                <input type="text" id="customId" placeholder="Custom ID (Preferred)" oninput="document.getElementById('checkStatus').innerText=''">
-                <span id="checkStatus" style="font-size:10px; font-weight:bold; display:block; margin-top:5px;"></span>
-            </div>
-            <div class="btn-row">
-                <button class="btn-check" onclick="checkAvailability()">🔍 Check</button>
-                <button class="btn-main" id="btnCustom" onclick="processShorten('custom')">✨ Custom</button>
-                <button class="btn-random" id="btnRandom" onclick="processShorten('random')">🎲 Random</button>
-            </div>
+            <h1>SHORTEN URL</h1>
+            <input type="url" id="longUrl" placeholder="https://google.com">
+            <input type="text" id="customId" placeholder="Custom ID" oninput="resetIdCheck()">
+            <span id="checkMsg" class="status-msg"></span>
             
-            <div class="btn-row" style="margin-top: 25px; border-top:1px solid var(--glass-border); padding-top: 20px;">
-                <button style="flex:1; background:none; border:1px solid #fff; color:#fff;" onclick="askExport()">💾 Backup</button>
-                <button style="flex:1; background:none; border:1px solid #fff; color:#fff;" onclick="document.getElementById('importFile').click()">📂 Restore</button>
+            <div class="btn-row">
+                <button class="btn-check" onclick="checkIDAvailability()">🔍 Check ID</button>
+                <button class="btn-custom" onclick="processShorten('custom')" id="btnCustom">✨ Custom</button>
+                <button class="btn-random" onclick="processShorten('random')" id="btnRandom">🎲 Random</button>
             </div>
-            <input type="file" id="importFile" style="display:none" onchange="importLocalData(event)">
+
+            <div class="btn-row" style="margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px;">
+                <button class="btn-backup" onclick="askModal('export')">💾 Export</button>
+                <button class="btn-backup" onclick="document.getElementById('fIn').click()">📂 Restore</button>
+            </div>
+            <input type="file" id="fIn" style="display:none" onchange="importData(event)">
         </div>
 
-        <div id="historyBox"></div>
+        <div class="history-box" id="historyList"></div>
     </div>
 
-    <!-- CONFIG SIDEBAR -->
+    <!-- ⚙️ SIDEBAR -->
     <div class="sidebar" id="sidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-            <h3>⚙️ Settings</h3>
-            <span onclick="toggleSidebar()" style="cursor:pointer; font-size:24px;">✖️</span>
+        <div class="sidebar-header">
+            <div style="font-size: 18px; font-weight: 600;">⚙️ Configuration</div>
+            <div onclick="toggleSidebar()" style="cursor:pointer">✖️</div>
         </div>
-        <button onclick="addNewToken()" style="background:var(--primary); color:#000; padding:5px 10px; border-radius:5px; margin-bottom:15px; font-weight:bold;">+ ADD NEW TOKEN</button>
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+            <span style="font-size:11px; color:#94a3b8;">API TOKENS</span>
+            <button onclick="addNewToken()" style="background:#06b6d4; padding:5px 8px; border-radius:6px; font-size:10px; color:#000;">+ ADD</button>
+        </div>
         <div id="tokenContainer"></div>
-        <button class="btn-main" style="width:100%; margin-top:20px;" onclick="syncWithCloud()">SAVE & SYNC CLOUD 💾</button>
-        <button style="width:100%; margin-top:10px; background:var(--danger); color:#fff; border-radius:12px; padding:12px; border:none; font-weight:bold;" onclick="logout()">LOGOUT 🚪</button>
+        <button class="btn-custom" style="width:100%; margin-top:20px;" onclick="syncCloud()">SAVE & SYNC CLOUD 💾</button>
+        <button class="btn-backup" style="width:100%; margin-top:10px; color:var(--danger); border-color:var(--danger);" onclick="askModal('reset')">Reset All ⚠️</button>
+        <button class="btn-random" style="width:100%; background: var(--danger); color: white; margin-top: 20px;" onclick="logout()">LOGOUT 🚪</button>
     </div>
 
-    <!-- CONFIRMATION MODAL -->
+    <!-- 🛑 MODAL -->
     <div class="overlay" id="modalOverlay">
         <div class="modal">
-            <h3 id="modalTitle" style="color:var(--primary);">Confirm Action</h3>
-            <p id="modalDesc" style="color:#94a3b8; font-size:13px;"></p>
-            <div style="display:flex; gap:10px; margin-top:25px;">
-                <button class="btn-main" style="flex:1" id="confirmBtn">Confirm ✅</button>
-                <button style="flex:1; background:#444; color:#fff; border:none; border-radius:12px; font-weight:bold;" onclick="closeModal()">Cancel ❌</button>
+            <h3 id="mT" style="color:var(--primary);">Confirm</h3>
+            <p id="mD" style="color:#94a3b8; font-size:13px; margin-bottom:20px;"></p>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-custom" style="flex:1" id="mC">Yes ✅</button>
+                <button class="btn-backup" style="flex:1" onclick="closeModal()">No ❌</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const CLOUD_URL = "https://script.google.com/macros/s/AKfycbw-lq4RzR0H4ZMWgI94g7yEyBp-dzg5u7mP62kd4A3OQxgeLgAnWRdabTGh6x65ofRF/exec";
-        let links = [], tokens = [], activeToken = "", editTargetId = null, isIdAvailable = false, groupGuid = "";
+        let bitlyHistory = [], config = { tokens: [] };
+        let isIdChecked = false, groupGuid = "", editId = null;
 
-        // --- AUTH & INITIALIZATION ---
-        async function handleLogin() {
-            const pass = document.getElementById('passInput').value;
+        async function checkCloudLogin() {
+            const pass = document.getElementById('pPass').value;
             const res = await fetch(CLOUD_URL, { method: 'POST', body: JSON.stringify({action:'login', pass:pass}) });
-            const data = await res.json();
-            if(data.success) {
-                sessionStorage.setItem('cloudAuth', 'true');
-                showDashboard();
-            } else { alert("Wrong Password! ❌"); }
+            const d = await res.json();
+            if(d.success) { sessionStorage.setItem('auth', 'true'); showApp(); } else { alert("Wrong! ❌"); }
         }
 
-        async function showDashboard() {
+        async function showApp() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
-            await loadDataFromCloud();
+            await loadCloudData();
         }
 
-        async function loadDataFromCloud() {
+        async function loadCloudData() {
             const res = await fetch(CLOUD_URL, { method: 'POST', body: JSON.stringify({action:'loadData'}) });
-            const data = await res.json();
-            links = data.links || [];
-            tokens = data.tokens.length ? data.tokens : [{id: Date.now(), key: "894ab7a943b13ae327edabd34aef3ba89661c6b8", active: true}];
-            renderDashboard();
-            fetchBitlyGroupGuid();
+            const d = await res.json();
+            bitlyHistory = d.links || [];
+            config.tokens = d.tokens.length ? d.tokens : [{id: 1, key: "894ab7a943b13ae327edabd34aef3ba89661c6b8", active: true}];
+            renderUI(); fetchGuid();
         }
 
-        async function syncWithCloud() {
-            await fetch(CLOUD_URL, { method: 'POST', body: JSON.stringify({action:'syncData', links:links, tokens:tokens}) });
-            alert("Cloud Synced Successfully! 🌍");
-            renderDashboard();
+        async function syncCloud() {
+            const res = await fetch(CLOUD_URL, { method: 'POST', body: JSON.stringify({action:'syncData', links:bitlyHistory, tokens:config.tokens}) });
+            const msg = await res.text();
+            alert(msg); renderUI();
         }
 
-        // --- BITLY LOGIC ---
-        async function fetchBitlyGroupGuid() {
-            activeToken = tokens.find(t => t.active)?.key;
-            if(!activeToken) return;
-            try {
-                const r = await fetch('https://api-ssl.bitly.com/v4/groups', { headers: { 'Authorization': `Bearer ${activeToken}` } });
-                const d = await r.json(); groupGuid = d.groups[0].guid;
-            } catch(e) { console.error("Bitly GUID Fetch Failed"); }
-        }
-
-        async function checkAvailability() {
-            const cid = document.getElementById('customId').value.trim();
-            if(!cid) return alert("Enter ID first!");
-            const st = document.getElementById('checkStatus');
-            st.innerText = "Checking...";
-            const r = await fetch(`https://api-ssl.bitly.com/v4/bitlinks/bit.ly/${cid}`, { headers:{'Authorization':`Bearer ${activeToken}`} });
-            if(r.status == 404) {
-                st.innerText = "✓ Available! ✨"; st.style.color = "var(--success)"; isIdAvailable = true;
-            } else {
-                st.innerText = "✗ Taken! 🎲"; st.style.color = "var(--danger)"; isIdAvailable = false;
-            }
-        }
-
-        async function processShorten(type) {
-            const long = document.getElementById('longUrl').value.trim();
-            const cid = document.getElementById('customId').value.trim();
-            if(!long) return alert("URL Required!");
-            if(type == 'custom' && (!cid || !isIdAvailable)) return alert("Check ID availability first!");
-
-            const btn = document.getElementById(type == 'custom' ? 'btnCustom' : 'btnRandom');
-            btn.innerText = "Wait..."; btn.disabled = true;
-
-            const endpoint = (type == 'custom') ? 'https://api-ssl.bitly.com/v4/bitlinks' : 'https://api-ssl.bitly.com/v4/shorten';
-            const payload = { long_url: long.startsWith('http')?long:'https://'+long, domain: "bit.ly" };
-            if(type == 'custom') { payload.backhalf = cid; payload.group_guid = groupGuid; }
-
-            try {
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${activeToken}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-
-                if(data.link) {
-                    if(editTargetId) links = links.filter(l => l.id !== editTargetId);
-                    links.unshift({name: cid || data.id.split('/')[1], short: data.link, long: payload.long_url, id: Date.now()});
-                    await syncWithCloud();
-                    clearForm();
-                } else { alert("Error: " + (data.description || "Limit Reached")); }
-            } catch (e) { alert("Server Error!"); }
-            finally { 
-                btn.innerText = (type == 'custom' ? '✨ Custom' : '🎲 Random');
-                btn.disabled = false;
-            }
-        }
-
-        // --- UI & TABLE RENDER ---
-        function renderDashboard() {
-            // Render Tokens
+        function renderUI() {
+            // Render Tokens in Sidebar
             const tc = document.getElementById('tokenContainer'); tc.innerHTML = "";
-            tokens.forEach(t => {
-                tc.innerHTML += `<div class="token-item">
+            config.tokens.forEach(t => {
+                tc.innerHTML += `<div class="token-card"><div style="display:flex; gap:10px; align-items:center;">
                     <input type="text" value="${t.key}" onchange="updateToken(${t.id}, this.value)" style="margin:0; flex:1; font-size:12px;">
                     <span onclick="setTokenActive(${t.id})" style="cursor:pointer">${t.active ? '✅' : '⚪'}</span>
-                    <span onclick="removeToken(${t.id})" style="color:var(--danger); cursor:pointer;">🗑️</span>
-                </div>`;
+                    <span onclick="askModal('delToken', ${t.id})" style="color:var(--danger); cursor:pointer;">🗑️</span>
+                    </div></div>`;
             });
 
             // Render Links
-            const hb = document.getElementById('historyBox');
-            hb.innerHTML = links.length ? "" : "<p style='text-align:center; opacity:0.5;'>No Cloud History Found</p>";
-            links.forEach(l => {
-                hb.innerHTML += `<div class="history-item">
+            const hl = document.getElementById('historyList');
+            hl.innerHTML = bitlyHistory.length ? "" : "<p style='text-align:center; opacity:0.5;'>No Data.</p>";
+            bitlyHistory.forEach(l => {
+                hl.innerHTML += `<div class="item-card">
                     <span style="font-size:10px; color:var(--primary);">🏷️ ${l.name}</span>
-                    <a href="javascript:void(0)" style="font-size:18px; color:#fff; font-weight:600; text-decoration:none; display:block; margin:5px 0;" onclick="askPermissionGo('${l.long}')">${l.short}</a>
-                    <div style="font-size:10px; opacity:0.5; word-break:break-all;">${l.long}</div>
-                    <button class="copy-btn-lg" onclick="copyLink('${l.short}')">📋 COPY LINK</button>
-                    <div style="display:flex; gap:10px; margin-top:15px;">
-                        <button style="background:none; border:1px solid var(--warning); color:var(--warning); padding:8px; border-radius:8px; font-size:12px; flex:1;" onclick="startEditLink(${l.id})">📝 Edit</button>
-                        <button style="background:none; border:1px solid var(--danger); color:var(--danger); padding:8px; border-radius:8px; font-size:12px; flex:1;" onclick="askDeleteLink(${l.id})">🗑️ Delete</button>
-                    </div>
-                </div>`;
+                    <a href="javascript:void(0)" style="font-size:18px; color:#fff; font-weight:600; text-decoration:none; display:block; margin:5px 0;" onclick="askModal('open', '${l.long}')">${l.short}</a>
+                    <div style="font-size:10px; opacity:0.6; word-break:break-all;">🌐 ${l.long}</div>
+                    <button class="btn-copy-lg" onclick="copy('${l.short}')">📋 COPY LINK</button>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <button style="background:none; border:1px solid #94a3b8; color:var(--warning); padding:5px 10px; border-radius:8px; font-size:11px;" onclick="editLink(${l.id})">📝 Edit</button>
+                        <button style="background:none; border:1px solid var(--danger); color:var(--danger); padding:5px 10px; border-radius:8px; font-size:11px;" onclick="askModal('delLink', ${l.id})">🗑️ Del</button>
+                    </div></div>`;
             });
         }
 
-        // --- HELPERS ---
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function addNewToken() { tokens.push({id: Date.now(), key: "", active: false}); renderDashboard(); }
-        function updateToken(id, val) { tokens.find(t => t.id == id).key = val; }
-        function setTokenActive(id) { tokens.forEach(t => t.active = (t.id == id)); renderDashboard(); fetchBitlyGroupGuid(); }
-        function removeToken(id) { tokens = tokens.filter(t => t.id !== id); renderDashboard(); }
-        function startEditLink(id) {
-            const l = links.find(x => x.id == id);
-            document.getElementById('longUrl').value = l.long;
-            document.getElementById('customId').value = l.name;
-            editTargetId = id; isIdAvailable = true;
-            window.scrollTo({top: 0, behavior: 'smooth'});
+        async function fetchGuid() {
+            const token = config.tokens.find(t => t.active)?.key; if(!token) return;
+            try {
+                const r = await fetch('https://api-ssl.bitly.com/v4/groups', { headers: { 'Authorization': `Bearer ${token}` } });
+                const d = await r.json(); groupGuid = d.groups[0].guid;
+            } catch(e) { console.error("Bitly GUID Fail"); }
         }
-        function askPermissionGo(url) { openModal("Visit Link?", "Do you want to visit this destination?", () => { window.open(url, '_blank'); closeModal(); }); }
-        function askDeleteLink(id) { openModal("Delete Link?", "Remove from cloud permanently?", async () => { links = links.filter(l => l.id !== id); await syncWithCloud(); closeModal(); }); }
-        function askExport() { openModal("Export Backup?", "Download link data as JSON?", () => { const b = new Blob([JSON.stringify(links)], {type:"application/json"}); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href=u; a.download="cloud_backup.json"; a.click(); closeModal(); }); }
-        
-        function openModal(title, desc, confirmAction) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalOverlay').style.display = 'flex';
-            document.getElementById('confirmBtn').onclick = confirmAction;
-        }
-        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-        function copyLink(text) { navigator.clipboard.writeText(text); alert("Copied to Clipboard! 📋"); }
-        function clearForm() { document.getElementById('longUrl').value=""; document.getElementById('customId').value=""; editTargetId=null; isIdAvailable=false; }
-        function logout() { sessionStorage.removeItem('cloudAuth'); location.reload(); }
 
-        window.onload = () => { if(sessionStorage.getItem('cloudAuth')) showDashboard(); };
+        async function checkIDAvailability() {
+            const cid = document.getElementById('customId').value.trim();
+            const token = config.tokens.find(t => t.active)?.key;
+            if(!cid) return alert("Enter ID!");
+            document.getElementById('checkMsg').innerText = "Checking...";
+            try {
+                const r = await fetch(`https://api-ssl.bitly.com/v4/bitlinks/bit.ly/${cid}`, { headers:{'Authorization':`Bearer ${token}`} });
+                if (r.status == 404) { document.getElementById('checkMsg').innerText="✓ Available!"; document.getElementById('checkMsg').style.color="var(--success)"; isIdChecked=true; }
+                else { document.getElementById('checkMsg').innerText="✗ Taken!"; document.getElementById('checkMsg').style.color="var(--danger)"; isIdChecked=false; }
+            } catch(e) { document.getElementById('checkMsg').innerText="Error!"; }
+        }
+
+        async function processShorten(type) {
+            const token = config.tokens.find(t => t.active)?.key;
+            const long = document.getElementById('longUrl').value.trim();
+            const cid = document.getElementById('customId').value.trim();
+            if(!long) return alert("Enter URL!");
+            if(type=='custom' && (!cid || !isIdChecked)) return alert("Check ID Availability first!");
+
+            const btn = document.getElementById(type=='custom'?'btnCustom':'btnRandom');
+            btn.innerText = "..."; btn.disabled = true;
+            const urlData = long.startsWith('http') ? long : 'https://' + long;
+
+            const endpoint = (type == 'custom') ? 'https://api-ssl.bitly.com/v4/bitlinks' : 'https://api-ssl.bitly.com/v4/shorten';
+            const body = { long_url: urlData, domain: "bit.ly" };
+            if(type == 'custom') { body.backhalf = cid; body.group_guid = groupGuid; }
+
+            try {
+                const r = await fetch(endpoint, { method:'POST', headers:{'Authorization':`Bearer ${token}`, 'Content-Type':'application/json'}, body:JSON.stringify(body) });
+                const data = await r.json();
+                if(type=='custom' && data.link && !data.link.toLowerCase().includes(cid.toLowerCase())) {
+                    alert("STRICT ERROR: Bitly gave a random link. Monthly limit reached!");
+                } else if(data.link) {
+                    if(editId) bitlyHistory = bitlyHistory.filter(l => l.id !== editId);
+                    bitlyHistory.unshift({name: cid || data.id.split('/')[1], short: data.link, long: urlData, id: Date.now()});
+                    await syncCloud(); clearForm();
+                } else { alert("Error: " + data.description); }
+            } catch(e) { alert("Server Error!"); }
+            finally { btn.innerText = type=='custom'?'✨ Custom':'🎲 Random'; btn.disabled = false; }
+        }
+
+        // --- Sidebar Logic ---
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function addNewToken() { config.tokens.push({id: Date.now(), key: "", active: false}); renderUI(); }
+        function updateToken(id, val) { config.tokens.find(t => t.id == id).key = val; }
+        function setTokenActive(id) { config.tokens.forEach(t => t.active = (t.id == id)); renderUI(); fetchGuid(); }
+
+        // --- Modal Logic ---
+        function askModal(type, data) {
+            let title = "Confirm", desc = "", action = null;
+            if(type=='delLink') { title="Delete Link?"; desc="Permanently remove from cloud?"; action=async()=>{ bitlyHistory=bitlyHistory.filter(l=>l.id!==data); await syncCloud(); closeModal(); }; }
+            if(type=='delToken') { title="Delete Token?"; desc="Remove this API Key?"; action=()=>{ config.tokens=config.tokens.filter(t=>t.id!==data); renderUI(); closeModal(); }; }
+            if(type=='open') { title="Visit Link?"; desc="Do you want to visit this destination?"; action=()=>{ window.open(data, '_blank'); closeModal(); }; }
+            if(type=='export') { title="Export Backup?"; desc="Download history as JSON?"; action=()=>{ const b=new Blob([JSON.stringify(bitlyHistory)], {type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="backup.json"; a.click(); closeModal(); }; }
+            if(type=='reset') { title="Reset All?"; desc="Wipe all cloud data?"; action=async()=>{ bitlyHistory=[]; config.tokens=[]; await syncCloud(); location.reload(); }; }
+
+            document.getElementById('mT').innerText = title; document.getElementById('mD').innerText = desc;
+            document.getElementById('modalOverlay').style.display='flex'; document.getElementById('mC').onclick=action;
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+        function copy(t) { navigator.clipboard.writeText(t); alert("Copied! 📋"); }
+        function resetIdCheck() { document.getElementById('checkMsg').innerText=""; isIdChecked=false; }
+        function logout() { sessionStorage.clear(); location.reload(); }
+        function clearForm() { document.getElementById('longUrl').value=""; document.getElementById('customId').value=""; editId=null; isIdChecked=false; }
+        function editLink(id) { const l = bitlyHistory.find(x => x.id == id); document.getElementById('longUrl').value=l.long; document.getElementById('customId').value=l.name; editId=id; isIdChecked=true; window.scrollTo({top:0, behavior:'smooth'}); }
+        function importData(e) { const r = new FileReader(); r.onload = (ev) => { bitlyHistory = JSON.parse(ev.target.result); syncCloud(); }; r.readAsText(e.target.files[0]); }
+        
+        window.onload = () => { if(sessionStorage.getItem('auth')) showApp(); };
     </script>
 </body>
 </html>
