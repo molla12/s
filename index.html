@@ -24,101 +24,97 @@
         .login-card { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 40px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; }
 
         #mainApp { display: none; width: 100%; max-width: 500px; }
-        .main-card { background: var(--card-bg); backdrop-filter: blur(25px); border-radius: 30px; padding: 30px; border: 1px solid var(--glass-border); text-align: center; margin-bottom: 25px; }
-        h1 { font-size: 22px; margin-bottom: 25px; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
-
-        .input-group { text-align: left; margin-bottom: 15px; }
-        input { width: 100%; padding: 14px; margin-top: 5px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border); border-radius: 12px; color: white; outline: none; }
+        .main-card { background: var(--card-bg); backdrop-filter: blur(25px); border-radius: 30px; padding: 30px; border: 1px solid var(--glass-border); text-align: center; margin-bottom: 20px; }
         
-        .btn-row { display: flex; gap: 8px; margin-top: 10px; }
-        button { padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        input { width: 100%; padding: 14px; margin-top: 5px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--glass-border); border-radius: 12px; color: white; outline: none; margin-bottom: 15px; }
         
-        .btn-custom { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; flex: 2; }
-        .btn-random { background: #fff; color: #000; flex: 1; }
-        .refresh-btn { background: var(--success); color: #000; width: 100%; margin-bottom: 20px; font-size: 14px; }
+        .btn-row { display: flex; gap: 10px; justify-content: space-between; margin-top: 10px; }
+        .btn-row button { border-radius: 12px; font-weight: 600; cursor: pointer; border: none; padding: 15px 5px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; }
+        
+        .btn-check { background: var(--warning); color: #000; }
+        .btn-custom { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; }
+        .btn-random { background: #fff; color: #000; }
+        .btn-update { background: var(--success); color: #000; width: 100%; margin-top: 10px; padding: 15px; border-radius: 12px; display: none; }
 
-        .item-card { background: var(--card-bg); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); }
-        .status-msg { font-size: 10px; margin-top: 5px; font-weight: bold; display: block; height: 15px; }
+        .refresh-btn { background: #fff; color: #000; width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; margin-bottom: 15px; border: none; cursor: pointer; }
 
-        .sidebar { position: fixed; top: 0; right: -100%; width: 100%; max-width: 350px; height: 100%; background: #111827; z-index: 6000; padding: 30px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
+        .tab-container { display: flex; gap: 10px; overflow-x: auto; width: 100%; padding-bottom: 15px; scrollbar-width: none; }
+        .tab-btn { background: #00f2fe; color: #000; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; white-space: nowrap; font-size: 13px; font-weight: 600; }
+        .tab-btn.active { background: #fff; border: 2px solid #00f2fe; }
+
+        .item-card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--glass-border); }
+        .btn-action { padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 11px; }
+
+        .sidebar { position: fixed; top: 0; right: -100%; width: 100%; max-width: 300px; height: 100%; background: #111827; z-index: 6000; padding: 20px; transition: 0.4s; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
         .sidebar.active { right: 0; }
-        .token-card { background: #1f2937; padding: 15px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #374151; }
-
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 7000; }
-        .modal { background: #1e293b; border-radius: 25px; padding: 30px; width: 90%; max-width: 380px; text-align: center; border: 1px solid var(--primary); }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #fff; cursor: pointer; font-weight: bold; border: 1px solid #444; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 5500; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
     <div id="loginScreen">
         <div class="login-card">
-            <h1 style="color:var(--primary)">🔐 LOGIN</h1>
-            <input type="password" id="passInput" placeholder="Password" style="margin-bottom:15px">
-            <button class="btn-custom" style="width:100%" onclick="checkLogin()">UNLOCK</button>
+            <h1>🔐 LOGIN</h1>
+            <input type="password" id="passInput" placeholder="Password">
+            <button class="btn-custom" style="width:100%; padding:15px;" onclick="checkLogin()">UNLOCK</button>
         </div>
     </div>
 
-    <!-- MAIN APP -->
     <div id="mainApp">
-        <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:20px; align-items:center;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
             <div style="font-weight:600; color:var(--primary)">BITLY ELITE 🚀</div>
-            <button onclick="toggleSidebar()" style="background:var(--card-bg); color:#fff; border:1px solid var(--glass-border); padding:8px 15px; border-radius:10px;">⚙️ Settings</button>
+            <button onclick="toggleSidebar()" style="background:var(--card-bg); color:#fff; padding:8px 15px; border-radius:10px; border:1px solid #444;">⚙️ Settings</button>
         </div>
 
         <div class="main-card">
-            <h1>🔗 Dashboard</h1>
-            <div class="input-group">
-                <label style="font-size:11px">Destination URL</label>
-                <input type="url" id="longUrl" placeholder="https://google.com">
-            </div>
-            <div class="input-group">
-                <label style="font-size:11px">Custom ID (STRICT)</label>
-                <input type="text" id="customId" placeholder="my-id" oninput="resetIdCheck()">
-                <span id="checkMsg" class="status-msg"></span>
-            </div>
+            <h2 id="dashTitle">🔗 DASHBOARD</h2>
+            <input type="url" id="longUrl" placeholder="Enter Long URL">
+            <input type="text" id="customId" placeholder="Custom ID">
+            <div id="checkMsg" style="font-size:11px; margin-bottom:10px; min-height:15px;"></div>
             
-            <div class="btn-row">
-                <button onclick="checkIdAvailability()" style="background:var(--warning); flex:1">🔍 Check</button>
-                <button class="btn-custom" onclick="shortenLink('custom')" id="btnCustom">✨ Custom</button>
-                <button class="btn-random" onclick="shortenLink('random')" id="btnRandom">🎲 Random</button>
+            <div class="btn-row" id="normalBtns">
+                <button class="btn-check" onclick="checkIdAvailability()">🔍<br>Check</button>
+                <button class="btn-custom" onclick="shortenLink('custom')" id="btnCustom">✨<br>Custom</button>
+                <button class="btn-random" onclick="shortenLink('random')" id="btnRandom">🎲<br>Random</button>
             </div>
+            <button class="btn-update" id="btnUpdate" onclick="updateLink()">💾 UPDATE LINK</button>
+            <button class="btn-random" id="btnCancelEdit" style="display:none; width:100%; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
         </div>
 
-        <button class="refresh-btn" id="refreshBtn" onclick="loadHistory()">🔄 SYNC CLOUD HISTORY</button>
+        <button class="refresh-btn" onclick="loadHistory()">🔄 SYNC CLOUD HISTORY</button>
+        <div class="tab-container" id="tabsList"></div>
         <div id="historyList"></div>
     </div>
 
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-        <h3>⚙️ Config</h3>
+        <div class="close-btn" onclick="toggleSidebar()">&times;</div>
+        <h3 style="margin-top:20px; color:var(--primary)">Settings</h3>
         <div id="tokenContainer"></div>
-        <button onclick="addNewToken()" style="width:100%; background:var(--success); color:#000; padding:10px; border-radius:10px; border:none; margin-bottom:10px;">+ Add New Token</button>
-        <button class="btn-custom" style="width:100%;" onclick="saveConfig()">Save & Reload 💾</button>
-        <button onclick="logout()" style="width:100%; margin-top:20px; background:var(--danger); color:#fff; border:none; padding:12px; border-radius:12px;">LOGOUT 🚪</button>
-    </div>
-
-    <!-- MODAL -->
-    <div class="overlay" id="modalOverlay">
-        <div class="modal">
-            <h3 id="mTitle">Confirm</h3>
-            <p id="mDesc" style="color:#94a3b8; font-size:13px; margin-bottom:20px;"></p>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-custom" style="flex:1" id="mConfirm">YES</button>
-                <button style="flex:1; background:#444; color:#fff; border-radius:12px; border:none;" onclick="closeModal()">NO</button>
-            </div>
-        </div>
+        <button onclick="addNewToken()" style="width:100%; background:var(--success); color:#000; margin-bottom:10px; padding:10px; border-radius:10px; font-weight:600; border:none;">+ Add Token</button>
+        <button class="btn-custom" style="width:100%; padding:12px; border-radius:12px;" onclick="saveConfig()">Save & Reload 💾</button>
+        <button onclick="logout()" style="width:100%; background:var(--danger); margin-top:20px; padding:12px; border-radius:10px; border:none; color:#fff;">Logout 🚪</button>
     </div>
 
     <script>
-        // আপনার নতুন গুগল অ্যাপস স্ক্রিপ্ট লিঙ্ক এখানে বসান (অবশ্যই আপডেট করা লিঙ্ক)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHv8hZa1NhT37YeOJUQlWfB0Mx7-7npm9-EmLZYXQC77SpovWbg-LRT9t5nZPQ6ECY-w/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXJjH9XmVKzaznXHuwj9kmwWNaS1d6IyJq3pVvsuk44ir7m39-dgkBHPN0vduVKWmoAw/exec"; 
         const APP_PASS = "1234";
+        const DEFAULT_TOKEN = "894ab7a943b13ae327edabd34aef3ba89661c6b8";
 
-        let config = JSON.parse(localStorage.getItem('bitlyProConfig')) || { tokens: [{id: 1, key: "894ab7a943b13ae327edabd34aef3ba89661c6b8", active: true}] };
-        let isIdChecked = false, groupGuid = "";
+        let config = JSON.parse(localStorage.getItem('bitlyProConfig')) || { tokens: [{id: 1, key: DEFAULT_TOKEN, active: true}] };
+        let currentSheet = "ALL", isIdChecked = false, groupGuid = "", editingShort = "", editingSheet = "";
 
         window.onload = () => { if(sessionStorage.getItem('isLoggedIn') === 'true') showApp(); };
+
+        function toggleSidebar() {
+            const sb = document.getElementById('sidebar');
+            const ov = document.getElementById('overlay');
+            sb.classList.toggle('active');
+            ov.style.display = sb.classList.contains('active') ? 'block' : 'none';
+        }
 
         function checkLogin() {
             if(document.getElementById('passInput').value === APP_PASS) {
@@ -126,65 +122,60 @@
             } else { alert("Wrong! ❌"); }
         }
 
-        function showApp() {
+        async function showApp() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
-            renderTokens(); fetchGroupGuid(); loadHistory();
+            renderTokens(); fetchGroupGuid(); await loadTabs();
         }
 
-        function logout() { sessionStorage.removeItem('isLoggedIn'); location.reload(); }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-
-        function renderTokens() {
-            const container = document.getElementById('tokenContainer'); container.innerHTML = "";
-            config.tokens.forEach(t => {
-                container.innerHTML += `<div class="token-card">
-                    <input type="text" value="${t.key}" onchange="updateToken(${t.id}, this.value)" style="padding:8px; font-size:10px; margin-bottom:5px;">
-                    <div style="display:flex; justify-content:space-between">
-                        <span onclick="setActiveToken(${t.id})" style="cursor:pointer; font-size:11px">${t.active ? '✅ Active' : '⚪ Set Active'}</span>
-                        <span onclick="removeToken(${t.id})" style="color:var(--danger); cursor:pointer; font-size:11px">🗑️ Delete</span>
-                    </div>
-                </div>`;
-            });
-        }
-        function addNewToken() { config.tokens.push({id: Date.now(), key: "", active: false}); renderTokens(); }
-        function updateToken(id, val) { const t = config.tokens.find(x => x.id === id); if(t) t.key = val; }
-        function setActiveToken(id) { config.tokens.forEach(t => t.active = (t.id === id)); renderTokens(); }
-        function removeToken(id) { if(config.tokens.length === 1) return; config.tokens = config.tokens.filter(x => x.id !== id); renderTokens(); }
-        function saveConfig() { localStorage.setItem('bitlyProConfig', JSON.stringify(config)); alert("Config Saved!"); location.reload(); }
-
-        async function fetchGroupGuid() {
-            const token = config.tokens.find(t => t.active)?.key;
+        async function loadTabs() {
             try {
-                const r = await fetch('https://api-ssl.bitly.com/v4/groups', { headers: { 'Authorization': `Bearer ${token}` } });
-                const d = await r.json(); groupGuid = d.groups[0].guid;
+                const res = await fetch(SCRIPT_URL + "?action=getSheets");
+                const names = await res.json();
+                const container = document.getElementById('tabsList');
+                container.innerHTML = `<button class="tab-btn ${currentSheet === "ALL" ? 'active' : ''}" onclick="changeTab('ALL')">ALL</button>`;
+                names.forEach(name => {
+                    container.innerHTML += `<button class="tab-btn ${currentSheet === name ? 'active' : ''}" onclick="changeTab('${name}')">${name}</button>`;
+                });
+                loadHistory();
             } catch(e) {}
         }
 
-        async function checkIdAvailability() {
-            const cid = document.getElementById('customId').value.trim();
-            const token = config.tokens.find(t => t.active)?.key;
-            if(!cid) return alert("Enter ID!");
-            document.getElementById('checkMsg').innerText = "Checking...";
+        function changeTab(name) { currentSheet = name; loadTabs(); }
+
+        async function loadHistory() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = "<p style='text-align:center'>Loading...</p>";
             try {
-                const r = await fetch(`https://api-ssl.bitly.com/v4/bitlinks/bit.ly/${cid}`, { headers: { 'Authorization': `Bearer ${token}` } });
-                isIdChecked = (r.status === 404);
-                document.getElementById('checkMsg').innerText = isIdChecked ? "✓ Available! ✨" : "✗ Taken! 🎲";
-                document.getElementById('checkMsg').style.color = isIdChecked ? "var(--success)" : "var(--danger)";
-            } catch (e) { document.getElementById('checkMsg').innerText = "Error!"; }
+                const res = await fetch(`${SCRIPT_URL}?sheetName=${encodeURIComponent(currentSheet)}&t=${Date.now()}`);
+                const data = await res.json();
+                list.innerHTML = "";
+                data.forEach(item => {
+                    list.innerHTML += `
+                        <div class="item-card">
+                            <div style="font-size:10px; color:var(--primary)">Sheet: ${item.sheet} | ID: ${item.name}</div>
+                            <div style="font-size:16px; font-weight:600; margin:5px 0; word-break:break-all;">${item.short}</div>
+                            <div style="display:flex; gap:5px; margin-top:10px;">
+                                <button class="btn-action btn-custom" style="flex:1" onclick="copy('${item.short}')">📋 COPY</button>
+                                <button class="btn-action" style="background:var(--warning); color:#000; flex:1" onclick="startEdit('${item.name}', '${item.short}', '${item.long}', '${item.sheet}')">📝 EDIT</button>
+                            </div>
+                            <div style="display:flex; gap:5px; margin-top:5px;">
+                                <button class="btn-action" style="background:var(--success); color:#000; flex:1" onclick="window.open('${item.short}', '_blank')">🌐 OPEN</button>
+                                <button class="btn-action" style="background:var(--danger); color:#fff; flex:1" onclick="deleteLink('${item.short}', '${item.sheet}')">🗑️ DEL</button>
+                            </div>
+                        </div>`;
+                });
+            } catch (e) { list.innerHTML = "No data found."; }
         }
-        function resetIdCheck() { document.getElementById('checkMsg').innerText = ""; isIdChecked = false; }
 
         async function shortenLink(type) {
             const token = config.tokens.find(t => t.active)?.key;
             const longUrl = document.getElementById('longUrl').value.trim();
             const cid = document.getElementById('customId').value.trim();
-            
+            const saveTo = (currentSheet === "ALL") ? "Sheet1" : currentSheet;
+
             if(!longUrl) return alert("Enter URL!");
             if(type === 'custom' && (!cid || !isIdChecked)) return alert("Check ID Availability first!");
-
-            const btn = document.getElementById(type === 'custom' ? 'btnCustom' : 'btnRandom');
-            btn.innerText = "⏳..."; btn.disabled = true;
 
             const urlData = longUrl.startsWith('http') ? longUrl : 'https://' + longUrl;
             const endpoint = (type === 'custom') ? 'https://api-ssl.bitly.com/v4/bitlinks' : 'https://api-ssl.bitly.com/v4/shorten';
@@ -198,83 +189,114 @@
                     body: JSON.stringify(payload)
                 });
                 const d = await r.json();
-                
                 if(d.link) {
-                    // STRICT CHECK: কাস্টম বাটনে রেন্ডম লিঙ্ক তৈরি হলে তা সেভ হবে না
                     if(type === 'custom' && !d.link.toLowerCase().includes(cid.toLowerCase())) {
-                        alert("❌ LIMIT ERROR: Bitly created a random link. Monthly Custom ID limit is OVER! This entry will NOT be saved.");
-                        btn.innerText = "✨ Custom"; btn.disabled = false;
-                        return; // এখানেই কাজ বন্ধ করে দিবে
+                        return alert("❌ CUSTOM LIMIT ERROR: Monthly limit is OVER!");
                     }
-                    
-                    await saveToCloud(cid || d.id.split('/')[1], d.link, urlData);
-                    alert("Success! 🚀"); clearInputs(); loadHistory();
-                } else { alert("Error: " + (d.description || "API Issue")); }
-            } catch (e) { alert("Network Error!"); }
-            finally { 
-                btn.innerText = (type === 'custom' ? "✨ Custom" : "🎲 Random"); 
-                btn.disabled = false; 
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST', mode: 'no-cors',
+                        body: JSON.stringify({ action: "add", name: cid || d.id.split('/')[1], short: d.link, long: urlData, sheetName: saveTo })
+                    });
+                    alert("Added! 🚀"); clearInputs(); loadHistory();
+                } else { alert("Bitly Error!"); }
+            } catch (e) { alert("Error!"); }
+        }
+
+        function startEdit(name, short, long, sheet) {
+            document.getElementById('longUrl').value = long;
+            document.getElementById('customId').value = name;
+            editingShort = short; editingSheet = sheet;
+            document.getElementById('dashTitle').innerText = "📝 EDITING LINK";
+            document.getElementById('normalBtns').style.display = 'none';
+            document.getElementById('btnUpdate').style.display = 'block';
+            document.getElementById('btnCancelEdit').style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        async function updateLink() {
+            const name = document.getElementById('customId').value.trim();
+            const long = document.getElementById('longUrl').value.trim();
+            await fetch(SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                body: JSON.stringify({ action: "update", name, short: editingShort, oldShort: editingShort, long, sheetName: editingSheet })
+            });
+            alert("Updated! 💾"); cancelEdit(); loadHistory();
+        }
+
+        function cancelEdit() {
+            editingShort = ""; editingSheet = "";
+            document.getElementById('dashTitle').innerText = "🔗 DASHBOARD";
+            document.getElementById('normalBtns').style.display = 'flex';
+            document.getElementById('btnUpdate').style.display = 'none';
+            document.getElementById('btnCancelEdit').style.display = 'none';
+            clearInputs();
+        }
+
+        async function deleteLink(short, sheet) {
+            if(confirm("Delete this link?")) {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors',
+                    body: JSON.stringify({ action: "delete", short: short, sheetName: sheet })
+                });
+                alert("Deleted!"); loadHistory();
             }
         }
 
-        async function saveToCloud(name, short, long) {
+        async function checkIdAvailability() {
+            const cid = document.getElementById('customId').value.trim();
+            const token = config.tokens.find(t => t.active)?.key;
+            if(!cid) return alert("Enter ID!");
+            document.getElementById('checkMsg').innerText = "Checking...";
             try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ action: "add", name, short, long })
-                });
+                const r = await fetch(`https://api-ssl.bitly.com/v4/bitlinks/bit.ly/${cid}`, { headers: { 'Authorization': `Bearer ${token}` } });
+                isIdChecked = (r.status === 404);
+                document.getElementById('checkMsg').innerText = isIdChecked ? "✓ Available ✨" : "✗ Taken 🎲";
+                document.getElementById('checkMsg').style.color = isIdChecked ? "var(--success)" : "var(--danger)";
+            } catch (e) { document.getElementById('checkMsg').innerText = "Error"; }
+        }
+
+        function renderTokens() {
+            const container = document.getElementById('tokenContainer'); container.innerHTML = "";
+            config.tokens.forEach(t => {
+                container.innerHTML += `<div style="background:#222; padding:10px; border-radius:10px; margin-bottom:10px; border:1px solid #444">
+                    <input type="text" value="${t.key}" onchange="updateToken(${t.id}, this.value)" style="padding:8px; font-size:10px; margin:0; width:100%">
+                    <div style="display:flex; justify-content:space-between; margin-top:5px">
+                        <span onclick="setActiveToken(${t.id})" style="cursor:pointer; font-size:11px; color:var(--primary)">${t.active ? '✅ Active' : '⚪ Set Active'}</span>
+                        <span onclick="removeToken(${t.id})" style="color:var(--danger); cursor:pointer; font-size:11px">🗑️ Delete</span>
+                    </div>
+                </div>`;
+            });
+        }
+
+        // টোকেন ডিলিট করার ফিক্সড ফাংশন
+        function removeToken(id) {
+            if (config.tokens.length <= 1) {
+                alert("You must have at least one token! ❌");
+                return;
+            }
+            if (confirm("Are you sure you want to delete this token?")) {
+                config.tokens = config.tokens.filter(x => x.id !== id);
+                renderTokens(); // লিস্ট আপডেট করা
+                alert("Token removed from list! 🗑️ (Click Save to confirm)");
+            }
+        }
+
+        function updateToken(id, val) { const t = config.tokens.find(x => x.id === id); if(t) t.key = val; }
+        function setActiveToken(id) { config.tokens.forEach(t => t.active = (t.id === id)); renderTokens(); }
+        function addNewToken() { config.tokens.push({id: Date.now(), key: "", active: false}); renderTokens(); }
+        function saveConfig() { localStorage.setItem('bitlyProConfig', JSON.stringify(config)); alert("Config Saved!"); location.reload(); }
+        
+        async function fetchGroupGuid() {
+            const token = config.tokens.find(t => t.active)?.key;
+            if(!token) return;
+            try {
+                const r = await fetch('https://api-ssl.bitly.com/v4/groups', { headers: { 'Authorization': `Bearer ${token}` } });
+                const d = await r.json(); groupGuid = d.groups[0].guid;
             } catch(e) {}
         }
-
-        async function loadHistory() {
-            const list = document.getElementById('historyList');
-            const refreshBtn = document.getElementById('refreshBtn');
-            refreshBtn.innerText = "🔄 SYNCING...";
-            try {
-                const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime());
-                const data = await response.json();
-                list.innerHTML = "";
-                data.forEach(item => {
-                    list.innerHTML += `
-                        <div class="item-card">
-                            <span style="font-size:10px; color:var(--primary);">🏷️ ${item.name}</span>
-                            <div style="font-size:16px; font-weight:600; margin:5px 0;">${item.short}</div>
-                            <div style="font-size:9px; opacity:0.5; word-break:break-all;">${item.long}</div>
-                            <button class="btn-custom" style="width:100%; margin-top:10px; padding:8px;" onclick="copy('${item.short}')">📋 COPY</button>
-                            <div style="display:flex; gap:10px; margin-top:10px;">
-                                <button onclick="startEdit('${item.name}','${item.long}')" style="flex:1; font-size:10px; background:var(--warning); color:#000; border-radius:8px; border:none; padding:8px;">📝 Edit</button>
-                                <button onclick="askDelete('${item.short}')" style="flex:1; font-size:10px; background:var(--danger); color:#fff; border-radius:8px; border:none; padding:8px;">🗑️ Delete</button>
-                            </div>
-                        </div>`;
-                });
-            } catch (e) { list.innerHTML = "Error loading history."; }
-            finally { refreshBtn.innerText = "🔄 SYNC CLOUD HISTORY"; }
-        }
-
-        function startEdit(name, long) {
-            document.getElementById('longUrl').value = long;
-            document.getElementById('customId').value = name;
-            window.scrollTo({top:0, behavior:'smooth'});
-        }
-
-        async function deleteFromCloud(short) {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ action: "delete", short: short })
-            });
-            setTimeout(loadHistory, 1500); 
-        }
-
-        function askDelete(short) { openModal("Delete?", "Remove from Cloud Sheet?", () => { deleteFromCloud(short); closeModal(); }); }
-        function openModal(t, d, cfm) {
-            document.getElementById('mTitle').innerText = t; document.getElementById('mDesc').innerText = d;
-            document.getElementById('modalOverlay').style.display = 'flex'; document.getElementById('mConfirm').onclick = cfm;
-        }
-        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-        function copy(t) { navigator.clipboard.writeText(t); alert("Copied! 📋"); }
-        function clearInputs() { document.getElementById('longUrl').value = ""; document.getElementById('customId').value = ""; resetIdCheck(); }
+        function clearInputs() { document.getElementById('longUrl').value = ""; document.getElementById('customId').value = ""; isIdChecked = false; document.getElementById('checkMsg').innerText = ""; }
+        function copy(t) { navigator.clipboard.writeText(t); alert("Copied!"); }
+        function logout() { sessionStorage.clear(); location.reload(); }
     </script>
 </body>
 </html>
